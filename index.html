@@ -1,17 +1,403 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Sall Timeless</title>
-    <link rel="stylesheet" href="style.css">
-</head> 
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pengatur Keuangan Harian</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- React via CDN + Babel for JSX in-browser -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Supabase (opsional) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 <body>
- <div class="kartu-profil">
-  <img src="foto-profil.png" alt="foto profil saya">
-  <h1>Salman fariziy</h1>
-  <p>hanya seorang pelajar yang ingin mencapai bintang </p>
-  <a href="https://www.instagram.com/salman_fariziy/">follow ig kids </a> 
-  <button id="SapaButton">Sapa Saya!</button> 
- </div>
-<script src="script.js"></script>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef } = React;
+
+    /*************** Konfigurasi Supabase (opsional) ***************/
+    const SUPABASE_URL = "";           // isi jika pakai Supabase
+    const SUPABASE_ANON_KEY = "";      // isi jika pakai Supabase
+
+    /*************** Util ***************/
+    const fmtIDR = (n) =>
+      n.toLocaleString("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 });
+
+    const todayStr = () => new Date().toISOString().slice(0,10);
+
+    const monthKey = (dStr) => {
+      const d = new Date(dStr);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; // YYYY-MM
+    };
+
+    const weekKey = (dStr) => {
+      // ISO week number
+      const d = new Date(dStr);
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = date.getUTCDay() || 7;
+      date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+      const weekNo = Math.ceil((((date - yearStart)/86400000)+1)/7);
+      return `${date.getUTCFullYear()}-W${String(weekNo).padStart(2,"0")}`;
+    };
+
+    const uid = () => Math.random().toString(36).slice(2,10);
+
+    /*************** Abstraksi Storage (LocalStorage / Supabase) ***************/
+    const isSupabase = SUPABASE_URL && SUPABASE_ANON_KEY;
+    const supabase = isSupabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    const Storage = {
+      async loadAll() {
+        if (!isSupabase) {
+          const raw = localStorage.getItem("pf_transactions");
+          const rawSet = localStorage.getItem("pf_settings");
+          return {
+            transactions: raw ? JSON.parse(raw) : [],
+            settings: rawSet ? JSON.parse(rawSet) : { monthlyBudget: 0 }
+          };
+        }
+        // Supabase
+        const { data: tData, error: tErr } = await supabase.from("transactions").select("*").order("date",{ascending:false});
+        const { data: sData, error: sErr } = await supabase.from("settings").select("*").maybeSingle();
+        if (tErr || sErr) {
+          console.warn("Supabase load error, fallback ke LocalStorage", tErr || sErr);
+          return Storage.loadAllLocalFallback();
+        }
+        return {
+          transactions: tData || [],
+          settings: sData || { monthlyBudget: 0 }
+        };
+      },
+      loadAllLocalFallback() {
+        const raw = localStorage.getItem("pf_transactions");
+        const rawSet = localStorage.getItem("pf_settings");
+        return {
+          transactions: raw ? JSON.parse(raw) : [],
+          settings: rawSet ? JSON.parse(rawSet) : { monthlyBudget: 0 }
+        };
+      },
+      async saveTransactions(list) {
+        if (!isSupabase) {
+          localStorage.setItem("pf_transactions", JSON.stringify(list));
+          return;
+        }
+        // Sederhana: hapus semua & insert ulang (untuk demo)
+        await supabase.from("transactions").delete().neq("id", ""); 
+        if (list.length) await supabase.from("transactions").insert(list);
+      },
+      async upsertSettings(settings) {
+        if (!isSupabase) {
+          localStorage.setItem("pf_settings", JSON.stringify(settings));
+          return;
+        }
+        await supabase.from("settings").upsert(settings);
+      }
+    };
+
+    /*************** Komponen: ProgressBar ***************/
+    const ProgressBar = ({ value, max }) => {
+      const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0;
+      return (
+        <div className="progress">
+          <div className={`progress__bar ${pct >= 90 ? "is-danger" : pct >= 70 ? "is-warning" : ""}`} style={{ width: pct + "%" }} />
+        </div>
+      );
+    };
+
+    /*************** Komponen: Chart ***************/
+    const LineChart = ({ labels, data, title }) => {
+      const ref = useRef(null);
+      const chartRef = useRef(null);
+
+      useEffect(() => {
+        if (!ref.current) return;
+        if (chartRef.current) chartRef.current.destroy();
+        chartRef.current = new Chart(ref.current, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              { label: title, data, tension: 0.25 }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+              x: { title: { display: true, text: "Periode" } },
+              y: { title: { display: true, text: "Total (IDR)" }, beginAtZero: true }
+            }
+          }
+        });
+        return () => chartRef.current?.destroy();
+      }, [labels.join("|"), data.join("|"), title]);
+
+      return <canvas ref={ref} height="120"></canvas>;
+    };
+
+    /*************** App ***************/
+    function App() {
+      const [transactions, setTransactions] = useState([]);
+      const [settings, setSettings] = useState({ monthlyBudget: 0 });
+      const [filterMonth, setFilterMonth] = useState(() => monthKey(todayStr()));
+      const [form, setForm] = useState({
+        type: "expense",
+        date: todayStr(),
+        category: "",
+        amount: "",
+        note: ""
+      });
+      const [alert, setAlert] = useState(null);
+
+      // Load awal
+      useEffect(() => {
+        (async () => {
+          const { transactions, settings } = await Storage.loadAll();
+          setTransactions(transactions);
+          setSettings(settings);
+        })();
+      }, []);
+
+      // Save on change
+      useEffect(() => { Storage.saveTransactions(transactions); }, [transactions]);
+      useEffect(() => { Storage.upsertSettings(settings); }, [settings]);
+
+      // Derivasi data
+      const filtered = useMemo(() => transactions.filter(t => monthKey(t.date) === filterMonth), [transactions, filterMonth]);
+
+      const totals = useMemo(() => {
+        const inc = filtered.filter(t=>t.type==="income").reduce((a,b)=>a+Number(b.amount||0),0);
+        const exp = filtered.filter(t=>t.type==="expense").reduce((a,b)=>a+Number(b.amount||0),0);
+        return { income: inc, expense: exp, net: inc - exp };
+      }, [filtered]);
+
+      // Notifikasi sederhana: bila expense > budget
+      useEffect(() => {
+        if (settings.monthlyBudget > 0 && totals.expense > settings.monthlyBudget) {
+          setAlert(`Pengeluaran bulan ini melewati batas! (${fmtIDR(totals.expense)} > ${fmtIDR(settings.monthlyBudget)})`);
+        } else {
+          setAlert(null);
+        }
+      }, [settings.monthlyBudget, totals.expense]);
+
+      // Data Chart mingguan & bulanan
+      const chartMonthly = useMemo(() => {
+        // Grup per bulan dari semua transaksi (12 bulan terakhir)
+        const map = new Map();
+        const now = new Date(filterMonth + "-01");
+        for (let i=11; i>=0; i--) {
+          const d = new Date(now);
+          d.setMonth(d.getMonth()-i);
+          const key = monthKey(d.toISOString().slice(0,10));
+          map.set(key, 0);
+        }
+        transactions.forEach(t => {
+          const key = monthKey(t.date);
+          if (map.has(key) && t.type === "expense") {
+            map.set(key, map.get(key) + Number(t.amount||0));
+          }
+        });
+        return { labels: [...map.keys()], data: [...map.values()] };
+      }, [transactions, filterMonth]);
+
+      const chartWeekly = useMemo(() => {
+        // Grup per minggu (8 pekan terakhir)
+        const map = new Map();
+        const base = new Date();
+        for (let i=7; i>=0; i--) {
+          const d = new Date(base);
+          d.setDate(d.getDate() - i*7);
+          const key = weekKey(d.toISOString().slice(0,10));
+          map.set(key, 0);
+        }
+        transactions.forEach(t => {
+          const key = weekKey(t.date);
+          if (map.has(key) && t.type === "expense") {
+            map.set(key, map.get(key) + Number(t.amount||0));
+          }
+        });
+        return { labels: [...map.keys()], data: [...map.values()] };
+      }, [transactions]);
+
+      // Rekomendasi tabungan otomatis (rule 50/30/20 + sisa)
+      const recommendation = useMemo(() => {
+        const inc = totals.income;
+        const exp = totals.expense;
+        const leftover = Math.max(0, inc - exp);
+        const saveTarget = Math.round(inc * 0.2); // 20% dari income
+        const suggestedSave = Math.min(saveTarget, leftover);
+        return { saveTarget, leftover, suggestedSave };
+      }, [totals]);
+
+      // Handlers
+      const submitTxn = (e) => {
+        e.preventDefault();
+        const amt = Number(form.amount);
+        if (!form.category.trim() || !amt || amt <= 0) return;
+        const t = { id: uid(), ...form, amount: amt };
+        setTransactions(prev => [t, ...prev]);
+        setForm({ ...form, category: "", amount: "", note: "" });
+      };
+
+      const removeTxn = (id) => setTransactions(prev => prev.filter(x => x.id !== id));
+
+      const clearMonth = () => {
+        if (!confirm("Hapus semua transaksi pada bulan terpilih?")) return;
+        const toKeep = transactions.filter(t => monthKey(t.date) !== filterMonth);
+        setTransactions(toKeep);
+      };
+
+      return (
+        <div className="container">
+          <header className="header">
+            <h1>Pengatur Keuangan Harian</h1>
+            <p className="muted">Catat pemasukan & pengeluaran, pantau grafik, dapatkan rekomendasi tabungan.</p>
+          </header>
+
+          <section className="card settings">
+            <div className="row">
+              <div className="col">
+                <label>Anggaran Bulanan (Budget)</label>
+                <input type="number" min="0" value={settings.monthlyBudget}
+                  onChange={(e)=>setSettings(s=>({...s, monthlyBudget: Number(e.target.value||0)}))} placeholder="cth: 3000000"/>
+                <small className="muted">Pengingat akan muncul bila pengeluaran melewati angka ini.</small>
+              </div>
+              <div className="col">
+                <label>Pilih Bulan</label>
+                <input type="month" value={filterMonth} onChange={(e)=>setFilterMonth(e.target.value)} />
+                <button className="btn danger" onClick={clearMonth}>Hapus transaksi bulan ini</button>
+              </div>
+            </div>
+            {alert && <div className="alert danger">{alert}</div>}
+          </section>
+
+          <section className="grid-2">
+            <div className="card">
+              <h2>Tambah Transaksi</h2>
+              <form onSubmit={submitTxn} className="form">
+                <div className="row">
+                  <div className="col">
+                    <label>Jenis</label>
+                    <select value={form.type} onChange={(e)=>setForm({...form, type: e.target.value})}>
+                      <option value="expense">Pengeluaran</option>
+                      <option value="income">Pemasukan</option>
+                    </select>
+                  </div>
+                  <div className="col">
+                    <label>Tanggal</label>
+                    <input type="date" value={form.date} onChange={(e)=>setForm({...form, date: e.target.value})}/>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <label>Kategori</label>
+                    <input value={form.category} onChange={(e)=>setForm({...form, category: e.target.value})} placeholder="Makan, Transport, Gaji, dll"/>
+                  </div>
+                  <div className="col">
+                    <label>Nominal</label>
+                    <input type="number" min="1" value={form.amount} onChange={(e)=>setForm({...form, amount: e.target.value})} placeholder="cth: 50000"/>
+                  </div>
+                </div>
+                <label>Catatan (opsional)</label>
+                <input value={form.note} onChange={(e)=>setForm({...form, note: e.target.value})} placeholder="misal: grab, kopi, tip"/>
+                <button className="btn primary" type="submit">Simpan</button>
+              </form>
+            </div>
+
+            <div className="card">
+              <h2>Ringkasan Bulan {filterMonth}</h2>
+              <div className="stats">
+                <div className="stat">
+                  <span className="stat__label">Pemasukan</span>
+                  <span className="stat__value">{fmtIDR(totals.income)}</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__label">Pengeluaran</span>
+                  <span className="stat__value">{fmtIDR(totals.expense)}</span>
+                  {settings.monthlyBudget > 0 && (
+                    <>
+                      <ProgressBar value={totals.expense} max={settings.monthlyBudget}/>
+                      <small className="muted">Budget: {fmtIDR(settings.monthlyBudget)}</small>
+                    </>
+                  )}
+                </div>
+                <div className="stat">
+                  <span className="stat__label">Sisa</span>
+                  <span className={`stat__value ${totals.net < 0 ? "neg" : ""}`}>{fmtIDR(totals.net)}</span>
+                </div>
+              </div>
+
+              <div className="recommend">
+                <h3>Rekomendasi Tabungan Otomatis</h3>
+                <p>Target 20% dari pemasukan: <b>{fmtIDR(recommendation.saveTarget)}</b></p>
+                <p>Sisa uang bulan ini: <b>{fmtIDR(recommendation.leftover)}</b></p>
+                <p>Saran nabung sekarang: <span className="pill">{fmtIDR(recommendation.suggestedSave)}</span></p>
+                <small className="muted">Gunakan rule 50/30/20 sebagai panduan fleksibel, sesuaikan kebutuhanmu.</small>
+              </div>
+            </div>
+          </section>
+
+          <section className="card">
+            <h2>Grafik Pengeluaran</h2>
+            <div className="grid-2">
+              <div>
+                <h3>Bulanan (12 bulan)</h3>
+                <LineChart labels={chartMonthly.labels} data={chartMonthly.data} title="Pengeluaran Bulanan" />
+              </div>
+              <div>
+                <h3>Mingguan (8 pekan)</h3>
+                <LineChart labels={chartWeekly.labels} data={chartWeekly.data} title="Pengeluaran Mingguan" />
+              </div>
+            </div>
+          </section>
+
+          <section className="card">
+            <h2>Daftar Transaksi ({filterMonth})</h2>
+            {filtered.length === 0 ? (
+              <p className="muted">Belum ada transaksi pada bulan ini.</p>
+            ) : (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Tgl</th>
+                    <th>Jenis</th>
+                    <th>Kategori</th>
+                    <th>Nominal</th>
+                    <th>Catatan</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map(tx => (
+                    <tr key={tx.id}>
+                      <td>{tx.date}</td>
+                      <td><span className={`tag ${tx.type==="income"?"tag--income":"tag--expense"}`}>{tx.type==="income"?"Pemasukan":"Pengeluaran"}</span></td>
+                      <td>{tx.category}</td>
+                      <td>{fmtIDR(Number(tx.amount||0))}</td>
+                      <td className="muted">{tx.note || "-"}</td>
+                      <td><button className="btn ghost" onClick={()=>removeTxn(tx.id)}>Hapus</button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </section>
+
+          <footer className="footer">
+            <span>📦 Mode penyimpanan: <b>{isSupabase ? "Supabase" : "LocalStorage"}</b></span>
+            {!isSupabase && <span className="muted"> (isi SUPABASE_URL & ANON_KEY di kode untuk sinkronisasi cloud)</span>}
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+  </script>
 </body>
 </html>
