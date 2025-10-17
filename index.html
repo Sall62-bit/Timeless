@@ -1,18 +1,47 @@
-<!DOCTYPE html>
-<html>
 <html lang="id">
-<head>
-    <title>Sall Timeless</title>
-    <link rel="stylesheet" href="style.css">
-</head> 
+</section>
 
-<body>
- <div class="kartu-profil">
-  <img src="foto-profil.png" alt="foto profil saya">
-  <h1>Salman fariziy</h1>
-  <p>hanya seorang pelajar yang ingin mencapai bintang </p>
-  <a href="https://www.instagram.com/salman_fariziy/">My Instagram </a> 
- </div>
+
+<section class="card">
+<div class="wrap">
+<div class="stat"><div class="muted">Total Bulan Ini</div><b id="sumMonth" class="amount">Rp 0</b></div>
+<div class="stat"><div class="muted">Pengeluaran Harian Rata-rata</div><b id="avgDay" class="amount">Rp 0</b></div>
+<div class="stat"><div class="muted">Transaksi</div><b id="countTx">0</b></div>
+</div>
+<div class="wrap" style="align-items:flex-start">
+<div>
+<h3 style="margin:16px 0 8px">🔸 Top Kategori (bulan dipilih)</h3>
+<ul id="topCat" class="muted" style="margin:0; padding-left:18px"></ul>
+</div>
+<div>
+<h3 style="margin:16px 0 8px">📊 Pie Kategori</h3>
+<canvas id="pie" width="420" height="420" aria-label="Pie chart kategori"></canvas>
+</div>
+</div>
+</section>
+
+
+<section class="card">
+<table id="table">
+<thead>
+<tr>
+<th style="width:120px">Tanggal</th>
+<th>Deskripsi</th>
+<th style="width:140px">Kategori</th>
+<th style="width:140px">Nominal</th>
+<th style="width:120px">Aksi</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<div class="footer" style="margin-top:10px">
+<div class="muted">Data tersimpan lokal • <span class="danger-link" id="backupHint">Tips: export rutin buat backup</span></div>
+<div class="muted">Made with ♥ — offline ready</div>
+</div>
+</section>
+</div>
+
+
 <script src="script.js"></script>
 </body>
 </html>
