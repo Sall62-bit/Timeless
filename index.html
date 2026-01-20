@@ -8,17 +8,12 @@
     
     <style>
         /* RESET & DASAR */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            /* Latar belakang hitam dengan gradasi merah gelap sangat halus di bagian atas */
             background: radial-gradient(circle at 50% 0%, #3a0e0e 0%, #000000 60%);
             color: #ecf0f1;
-            font-family: 'Lora', serif; /* Font serif agar terbaca seperti buku sejarah */
+            font-family: 'Lora', serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,10 +21,10 @@
             padding: 20px;
         }
 
-        /* CONTAINER UTAMA (EFEK KACA) */
+        /* CONTAINER UTAMA */
         .museum-card {
-            background: rgba(255, 255, 255, 0.05); /* Transparan */
-            backdrop-filter: blur(10px); /* Efek blur di belakang */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             max-width: 900px;
@@ -49,7 +44,7 @@
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
-            color: #e74c3c; /* Warna Merah Bendera */
+            color: #e74c3c;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 5px;
@@ -73,7 +68,7 @@
         video {
             width: 100%;
             display: block;
-            max-height: 70vh; /* Agar tidak terlalu tinggi di layar besar */
+            max-height: 70vh;
         }
 
         /* AREA PENJELASAN */
@@ -84,9 +79,7 @@
             color: #dcdcdc;
         }
 
-        .content p {
-            margin-bottom: 20px;
-        }
+        .content p { margin-bottom: 20px; }
 
         .dropcap {
             float: left;
@@ -114,14 +107,12 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* RESPONSIVE UNTUK HP */
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
             .content { padding: 20px; font-size: 1rem; }
             .dropcap { font-size: 3rem; }
         }
 
-        /* ANIMASI MASUK */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -137,7 +128,7 @@
         </header>
 
         <div class="video-container">
-            <video controls controlsList="nodownload" poster="https://i.imgur.com/8QQZ5Xq.png">
+            <video controls controlsList="nodownload" poster="thumbnail.jpg">
                 <source src="Proklamasi.mp4" type="video/mp4">
                 Browser Anda tidak mendukung pemutaran video ini.
             </video>
