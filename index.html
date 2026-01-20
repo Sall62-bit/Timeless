@@ -3,112 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dokumentasi Proklamasi Kemerdekaan Indonesia</title>
+    <title>Proklamasi Kemerdekaan Indonesia</title>
+
     <style>
-        /* Mengatur gaya dasar halaman agar latar belakang hitam dan teks putih */
         body {
-            background-color: #000000; /* Latar belakang hitam pekat */
-            color: #e0e0e0; /* Warna teks putih agak abu agar tidak terlalu silau */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 16px;
         }
-
-        /* Wadah utama untuk konten agar rapi di tengah layar */
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #111111; /* Latar belakang kontainer sedikit lebih terang dari body */
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Memberikan sedikit efek bayangan halus */
-        }
-
-        /* Gaya untuk judul utama */
         h1 {
             text-align: center;
-            color: #ffffff;
-            margin-bottom: 25px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            color: #b71c1c;
         }
-
-        /* Gaya untuk pemutar video */
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* Membuat rasio aspek 16:9 */
-            height: 0;
-            margin-bottom: 30px;
-            border: 2px solid #333;
-            background-color: #000;
-        }
-
-        .video-wrapper video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            outline: none;
-        }
-
-        /* Gaya untuk area teks penjelasan */
-        .description {
-            background-color: #1a1a1a;
-            padding: 25px;
+        .box {
+            background: #ffffff;
+            padding: 16px;
             border-radius: 8px;
-            border-left: 4px solid #c0392b; /* Aksen garis merah di sebelah kiri */
         }
-
-        .description h2 {
-            margin-top: 0;
-            color: #ffffff;
-            font-size: 1.4rem;
+        iframe {
+            width: 100%;
+            height: 215px;
+            border-radius: 8px;
+            margin: 12px 0;
         }
-
-        .description p {
+        p {
+            text-align: justify;
+            font-size: 14px;
             line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 1rem;
         }
-
-        /* Gaya untuk teks highlight/penting */
-        .highlight {
-            font-weight: bold;
-            color: #ffffff;
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 16px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Dokumentasi Sejarah Bangsa</h1>
+<h1>Proklamasi Kemerdekaan Indonesia</h1>
 
-        <div class="video-wrapper">
-            <video controls controlsList="nodownload" poster="https://i.imgur.com/8QQZ5Xq.png">
-                <source src="Proklamasi.mp4" type="video/mp4">
-                Browser Anda tidak mendukung tag video. Silakan perbarui browser Anda.
-            </video>
-        </div>
+<div class="box">
 
-        <div class="description">
-            <h2>Tentang Video Ini: Detik-Detik Proklamasi</h2>
-            <p>
-                Video di atas merupakan rekaman dokumentasi sejarah yang sangat berharga, menampilkan momen puncak perjuangan kemerdekaan bangsa Indonesia. Peristiwa sakral ini terjadi pada hari Jumat legi, tanggal <span class="highlight">17 Agustus 1945</span>, pukul 10.00 pagi.
-            </p>
-            <p>
-                Bertempat di halaman rumah Ir. Soekarno di <span class="highlight">Jalan Pegangsaan Timur Nomor 56, Jakarta</span> (sekarang tugu Proklamasi), naskah Proklamasi dibacakan oleh Ir. Soekarno dengan didampingi oleh Drs. Mohammad Hatta. Pembacaan teks yang singkat namun tegas ini menandai lahirnya Negara Republik Indonesia yang merdeka dan berdaulat, lepas dari belenggu penjajahan.
-            </p>
-            <p>
-                Meskipun direkam dengan peralatan yang sederhana pada masanya, video ini menjadi bukti otentik semangat para pendiri bangsa dalam memproklamirkan kemerdekaan Indonesia ke seluruh dunia.
-            </p>
-        </div>
-    </div>
+    <p>
+        Proklamasi Kemerdekaan Republik Indonesia dibacakan pada
+        tanggal 17 Agustus 1945 oleh Ir. Soekarno sebagai tanda
+        lahirnya negara Indonesia yang merdeka.
+    </p>
+
+    <!-- YOUTUBE FIX APPSGEYSER -->
+    <iframe
+        src="Proklamasi.mp4"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+
+    <p>
+        Peristiwa ini berlangsung di Jalan Pegangsaan Timur No. 56,
+        Jakarta, dan menjadi tonggak penting dalam sejarah bangsa Indonesia.
+    </p>
+
+</div>
+
+<footer>
+    Materi Sejarah Indonesia
+</footer>
 
 </body>
 </html>
