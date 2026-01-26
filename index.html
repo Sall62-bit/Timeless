@@ -4,48 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dokumentasi Proklamasi Kemerdekaan Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Mengatur gaya dasar halaman agar latar belakang hitam dan teks putih */
+        :root {
+            --merah-darah: #bf212f;
+            --emas: #d4af37;
+            --hitam-pekat: #0a0a0a;
+            --abu-terang: #f0f0f0;
+        }
+
         body {
-            background-color: #000000; /* Latar belakang hitam pekat */
-            color: #e0e0e0; /* Warna teks putih agak abu agar tidak terlalu silau */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--hitam-pekat);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            color: var(--abu-terang);
+            font-family: 'Lato', sans-serif;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
-        /* Wadah utama untuk konten agar rapi di tengah layar */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-            background-color: #111111; /* Latar belakang kontainer sedikit lebih terang dari body */
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Memberikan sedikit efek bayangan halus */
+            background: linear-gradient(145deg, #121212, #0e0e0e);
+            border-top: 5px solid var(--merah-darah);
+            border-bottom: 1px solid #333;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
-        /* Gaya untuk judul utama */
         h1 {
+            font-family: 'Playfair Display', serif;
             text-align: center;
             color: #ffffff;
-            margin-bottom: 25px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Gaya untuk pemutar video */
+        .sub-title {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .video-frame {
+            position: relative;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 35px;
+        }
+
         .video-wrapper {
             position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* Membuat rasio aspek 16:9 */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
-            margin-bottom: 30px;
-            border: 2px solid #333;
-            background-color: #000;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .video-wrapper video {
@@ -54,33 +78,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            outline: none;
+            object-fit: cover;
         }
 
-        /* Gaya untuk area teks penjelasan */
-        .description {
-            background-color: #1a1a1a;
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .description-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--emas);
             padding: 25px;
-            border-radius: 8px;
-            border-left: 4px solid #c0392b; /* Aksen garis merah di sebelah kiri */
+            border-radius: 0 8px 8px 0;
         }
 
-        .description h2 {
+        .description-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--merah-darah);
             margin-top: 0;
-            color: #ffffff;
-            font-size: 1.4rem;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .description p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 1rem;
+        .description-card p {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #ccc;
+            text-align: justify;
         }
 
-        /* Gaya untuk teks highlight/penting */
         .highlight {
+            color: #fff;
             font-weight: bold;
-            color: #ffffff;
+            background: linear-gradient(180deg, transparent 60%, rgba(191, 33, 47, 0.3) 60%);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -88,25 +136,37 @@
 
     <div class="container">
         <h1>Dokumentasi Sejarah Bangsa</h1>
+        <div class="sub-title">Arsip Nasional Republik Indonesia</div>
 
-        <div class="video-wrapper">
-            <video controls controlsList="nodownload" poster="https://i.imgur.com/8QQZ5Xq.png">
-                <source src="Proklamasi.mp4" type="video/mp4">
-                Browser Anda tidak mendukung tag video. Silakan perbarui browser Anda.
-            </video>
+        <div class="video-frame">
+            <div class="video-wrapper">
+                
+                <video controls controlsList="nodownload" poster="thumbnail.jpg">
+                    
+                    <source src="Proklamasi.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung pemutar video ini.
+                </video>
+
+            </div>
         </div>
 
-        <div class="description">
-            <h2>Tentang Video Ini: Detik-Detik Proklamasi</h2>
-            <p>
-                Video di atas merupakan rekaman dokumentasi sejarah yang sangat berharga, menampilkan momen puncak perjuangan kemerdekaan bangsa Indonesia. Peristiwa sakral ini terjadi pada hari Jumat legi, tanggal <span class="highlight">17 Agustus 1945</span>, pukul 10.00 pagi.
-            </p>
-            <p>
-                Bertempat di halaman rumah Ir. Soekarno di <span class="highlight">Jalan Pegangsaan Timur Nomor 56, Jakarta</span> (sekarang tugu Proklamasi), naskah Proklamasi dibacakan oleh Ir. Soekarno dengan didampingi oleh Drs. Mohammad Hatta. Pembacaan teks yang singkat namun tegas ini menandai lahirnya Negara Republik Indonesia yang merdeka dan berdaulat, lepas dari belenggu penjajahan.
-            </p>
-            <p>
-                Meskipun direkam dengan peralatan yang sederhana pada masanya, video ini menjadi bukti otentik semangat para pendiri bangsa dalam memproklamirkan kemerdekaan Indonesia ke seluruh dunia.
-            </p>
+        <div class="content-grid">
+            <div class="description-card">
+                <h2>Detik-Detik Proklamasi</h2>
+                <p>
+                    Rekaman ini adalah saksi bisu dari puncak perjuangan bangsa. Pada hari Jumat Legi, tanggal <span class="highlight">17 Agustus 1945</span> pukul 10.00 pagi, sejarah baru dimulai.
+                </p>
+                <p>
+                    Bertempat di pelataran rumah sederhana di <span class="highlight">Jalan Pegangsaan Timur No. 56, Jakarta</span>, Ir. Soekarno, didampingi oleh Drs. Mohammad Hatta, membacakan naskah suci Proklamasi. Dengan suara yang lantang dan penuh wibawa, belenggu kolonialisme dipatahkan, dan kedaulatan Indonesia dikumandangkan ke seluruh penjuru dunia.
+                </p>
+                <p>
+                    Video ini bukan sekadar arsip digital, melainkan pengingat akan semangat api nan tak kunjung padam dari para pendiri bangsa.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 1945 - 2026 Dirgahayu Republik Indonesia. Merdeka!
         </div>
     </div>
 
