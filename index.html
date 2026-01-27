@@ -1,172 +1,444 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dokumentasi Proklamasi Kemerdekaan Indonesia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Yermiah Serge - CV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --merah-darah: #bf212f;
-            --emas: #d4af37;
-            --hitam-pekat: #0a0a0a;
-            --abu-terang: #f0f0f0;
+        /* --- RESET & BASIC STYLE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--hitam-pekat);
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            color: var(--abu-terang);
-            font-family: 'Lato', sans-serif;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+            background-color: #eef1f5;
             display: flex;
             justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 900px;
-            width: 100%;
-            background: linear-gradient(145deg, #121212, #0e0e0e);
-            border-top: 5px solid var(--merah-darah);
-            border-bottom: 1px solid #333;
-            border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-            color: #ffffff;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .sub-title {
-            text-align: center;
-            color: #888;
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .video-frame {
+        .resume-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Pembagian kolom Kiri (1) dan Kanan (2) */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             position: relative;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 35px;
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .video-wrapper video {
+        /* --- DEKORASI BACKGROUND ATAS & BAWAH --- */
+        .bg-curve-top {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(120deg, #2980b9, #6dd5fa);
+            clip-path: ellipse(80% 50% at 50% 0%);
+            z-index: 0;
+        }
+
+        .bg-curve-bottom {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(120deg, #6dd5fa, #2980b9);
+            clip-path: ellipse(70% 70% at 80% 100%);
+            z-index: 0;
+        }
+
+        /* --- LEFT COLUMN --- */
+        .left-col {
+            padding: 40px 20px;
+            text-align: center;
+            z-index: 1;
+            background-color: #fff; /* Agar terlihat terpisah */
+        }
+
+        .profile-img-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin: 0 auto 20px;
+            background-color: #ddd;
+        }
+
+        .profile-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+        .name-title h1 {
+            font-size: 28px;
+            text-transform: uppercase;
+            color: #222;
+            font-weight: 800;
+        }
+
+        .name-title h3 {
+            font-size: 18px;
+            color: #3498db;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* --- RIGHT COLUMN --- */
+        .right-col {
+            padding: 40px 30px;
+            z-index: 1;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: flex-end;
             gap: 20px;
+            font-size: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #333;
         }
 
-        .description-card {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--emas);
-            padding: 25px;
-            border-radius: 0 8px 8px 0;
+        .contact-item i {
+            color: #3498db;
         }
 
-        .description-card h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--merah-darah);
-            margin-top: 0;
-            font-size: 1.8rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
+        /* --- COLLAPSIBLE SECTIONS (INTERACTIVE) --- */
+        details {
             margin-bottom: 20px;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
         }
 
-        .description-card p {
-            line-height: 1.8;
-            font-size: 1.05rem;
-            color: #ccc;
-            text-align: justify;
-        }
-
-        .highlight {
-            color: #fff;
+        summary {
+            background-color: #3498db; /* Warna Biru Header */
+            color: white;
+            padding: 10px 15px;
             font-weight: bold;
-            background: linear-gradient(180deg, transparent 60%, rgba(191, 33, 47, 0.3) 60%);
+            text-transform: uppercase;
+            cursor: pointer;
+            list-style: none; /* Hilangkan panah default */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            transition: background 0.3s;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.8rem;
+        summary:hover {
+            background-color: #2980b9;
+        }
+
+        /* Tambahkan icon plus/minus custom */
+        summary::after {
+            content: '+'; 
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        details[open] summary {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .content-box {
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* --- SKILL BARS --- */
+        .skill-item {
+            margin-bottom: 10px;
+        }
+        .skill-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+        .bar-bg {
+            background: #ddd;
+            height: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .bar-fill {
+            height: 100%;
+            background: #3498db;
+            border-radius: 5px;
+            position: relative;
+        }
+        /* Lingkaran slider effect */
+        .bar-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -3px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+        }
+
+        /* --- LANGUAGE DOTS --- */
+        .lang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .dots {
+            display: flex;
+            gap: 5px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+        .dot.active {
+            background-color: #3498db;
+        }
+
+        /* --- TIMELINE (Education & Work) --- */
+        .timeline-item {
+            border-left: 2px solid #ccc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+        .timeline-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        .timeline-date {
+            color: #3498db;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .timeline-desc {
+            font-size: 13px;
             color: #555;
-            border-top: 1px solid #222;
-            padding-top: 20px;
+            line-height: 1.4;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 20px; }
-            h1 { font-size: 1.8rem; }
+        /* --- INTERESTS --- */
+        .interest-grid {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        .interest-item {
+            text-align: center;
+        }
+        .interest-icon {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5px;
+        }
+        .interest-text {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .resume-container {
+                grid-template-columns: 1fr;
+            }
+            .bg-curve-top { height: 150px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Dokumentasi Sejarah Bangsa</h1>
-        <div class="sub-title">Arsip Nasional Republik Indonesia</div>
+    <div class="bg-curve-top"></div>
+    <div class="bg-curve-bottom"></div>
 
-        <div class="video-frame">
-            <div class="video-wrapper">
-                
-                <video controls controlsList="nodownload" poster="thumbnail.jpg">
-                    
-                    <source src="Proklamasi.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung pemutar video ini.
-                </video>
-
+    <div class="resume-container">
+        
+        <div class="left-col">
+            <div class="profile-img-container">
+                <img src="foto-profile.png" alt="Profile Picture">
             </div>
+
+            <div class="name-title">
+                <h1>Yermiah<br>Serge</h1>
+                <h3>Web Developer</h3>
+            </div>
+
+            <details>
+                <summary><i class="fas fa-cog"></i> &nbsp; SKILLS</summary>
+                <div class="content-box">
+                    <div class="skill-item">
+                        <span class="skill-name">PHP</span>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">HTML</span>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Swift</span>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Objective C</span>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary><i class="fas fa-comment"></i> &nbsp; LANGUAGE</summary>
+                <div class="content-box">
+                    <div class="lang-item">
+                        <span>English</span>
+                        <div class="dots">
+                            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
+                        </div>
+                    </div>
+                    <div class="lang-item">
+                        <span>Spanish</span>
+                        <div class="dots">
+                            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="lang-item">
+                        <span>German</span>
+                        <div class="dots">
+                            <span class="dot active"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <div style="margin-top: 30px;">
+                <h4 style="color:#222; margin-bottom:15px; text-transform:uppercase;"><i class="fas fa-heart" style="color:#3498db"></i> Interest</h4>
+                <div class="interest-grid">
+                    <div class="interest-item">
+                        <div class="interest-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <span class="interest-text">Gadget</span>
+                    </div>
+                    <div class="interest-item">
+                        <div class="interest-icon"><i class="fas fa-plane"></i></div>
+                        <span class="interest-text">Travel</span>
+                    </div>
+                    <div class="interest-item">
+                        <div class="interest-icon"><i class="fas fa-camera"></i></div>
+                        <span class="interest-text">Photo</span>
+                    </div>
+                </div>
+             </div>
+
         </div>
 
-        <div class="content-grid">
-            <div class="description-card">
-                <h2>Detik-Detik Proklamasi</h2>
-                <p>
-                    Rekaman ini adalah saksi bisu dari puncak perjuangan bangsa. Pada hari Jumat Legi, tanggal <span class="highlight">17 Agustus 1945</span> pukul 10.00 pagi, sejarah baru dimulai.
-                </p>
-                <p>
-                    Bertempat di pelataran rumah sederhana di <span class="highlight">Jalan Pegangsaan Timur No. 56, Jakarta</span>, Ir. Soekarno, didampingi oleh Drs. Mohammad Hatta, membacakan naskah suci Proklamasi. Dengan suara yang lantang dan penuh wibawa, belenggu kolonialisme dipatahkan, dan kedaulatan Indonesia dikumandangkan ke seluruh penjuru dunia.
-                </p>
-                <p>
-                    Video ini bukan sekadar arsip digital, melainkan pengingat akan semangat api nan tak kunjung padam dari para pendiri bangsa.
-                </p>
+        <div class="right-col">
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i> name@company.com
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i> +09-8209-283-038
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i> Street Avenue 90
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i> www.helpshared.com
+                </div>
             </div>
-        </div>
 
-        <div class="footer">
-            &copy; 1945 - 2026 Dirgahayu Republik Indonesia. Merdeka!
+            <div style="background:#3498db; color:white; padding:10px 15px; font-weight:bold; border-radius:5px; margin-bottom:15px; display:flex; justify-content:space-between;">
+                <span>PROFILE</span> <i class="fas fa-user"></i>
+            </div>
+            <p style="margin-bottom: 30px; color:#555; line-height:1.5;">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam quis nostrud exerci tation dol.
+            </p>
+
+            <details>
+                <summary>EDUCATION <i class="fas fa-graduation-cap"></i></summary>
+                <div class="content-box">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Local Programmer College</div>
+                        <div class="timeline-date">2012 - 2016</div>
+                        <div class="timeline-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">International Coding University</div>
+                        <div class="timeline-date">2012 - 2016</div>
+                        <div class="timeline-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt.</div>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>WORK EXPERIENCE <i class="fas fa-desktop"></i></summary>
+                <div class="content-box">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Web Developer (Company 01)</div>
+                        <div class="timeline-date">2012 - 2016</div>
+                        <div class="timeline-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Senior Web Developer (Company 02)</div>
+                        <div class="timeline-date">2012 - 2016</div>
+                        <div class="timeline-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
+                    </div>
+                </div>
+            </details>
+
         </div>
     </div>
 
