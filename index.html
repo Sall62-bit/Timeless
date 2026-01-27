@@ -3,75 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yermiah Serge - CV</title>
+    <title>Yermiah Serge - Modern CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* --- RESET & BASIC STYLE --- */
+        /* --- VARIABEL WARNA & RESET --- */
+        :root {
+            --primary-color: #005bea;
+            --primary-gradient: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
+            --secondary-bg: #f4f7f6;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --card-shadow: 0 10px 30px rgba(0, 91, 234, 0.15);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: #eef1f5;
+            background-color: #ece9e6; 
+            background: linear-gradient(to right, #ece9e6, #ffffff);
             display: flex;
             justify-content: center;
-            padding: 40px;
+            padding: 50px 20px;
+            min-height: 100vh;
         }
 
+        /* --- CONTAINER UTAMA (Dengan Animasi Masuk) --- */
         .resume-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background-color: white;
             display: grid;
-            grid-template-columns: 1fr 2fr; /* Pembagian kolom Kiri (1) dan Kanan (2) */
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            grid-template-columns: 320px 1fr;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        /* --- DEKORASI BACKGROUND ATAS & BAWAH --- */
-        .bg-curve-top {
+        /* --- DEKORASI BACKGROUND (WAVES) --- */
+        .bg-deco {
             position: absolute;
+            width: 100%;
+            height: 300px;
+            background: var(--primary-gradient);
             top: 0;
             left: 0;
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(120deg, #2980b9, #6dd5fa);
-            clip-path: ellipse(80% 50% at 50% 0%);
             z-index: 0;
+            clip-path: ellipse(85% 60% at 50% 15%);
         }
-
-        .bg-curve-bottom {
+        
+        .bg-deco-bottom {
             position: absolute;
+            width: 100%;
+            height: 200px;
+            background: var(--primary-gradient);
             bottom: 0;
             right: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(120deg, #6dd5fa, #2980b9);
-            clip-path: ellipse(70% 70% at 80% 100%);
             z-index: 0;
+            clip-path: ellipse(60% 70% at 80% 120%);
+            opacity: 0.8;
         }
 
-        /* --- LEFT COLUMN --- */
+        /* --- LEFT COLUMN (SIDEBAR) --- */
         .left-col {
-            padding: 40px 20px;
+            background: #fff;
+            padding: 40px 25px;
             text-align: center;
             z-index: 1;
-            background-color: #fff; /* Agar terlihat terpisah */
+            border-right: 1px solid #eee;
+            position: relative;
         }
 
+        /* Foto Profil dengan Efek Pulse */
         .profile-img-container {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            border: 6px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             overflow: hidden;
             margin: 0 auto 20px;
-            background-color: #ddd;
+            background-color: #fff;
+            position: relative;
+            animation: pulseProfile 3s infinite;
         }
 
         .profile-img-container img {
@@ -81,334 +105,362 @@
         }
 
         .name-title h1 {
-            font-size: 28px;
-            text-transform: uppercase;
-            color: #222;
-            font-weight: 800;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
         .name-title h3 {
-            font-size: 18px;
-            color: #3498db;
+            font-size: 16px;
+            color: #005bea;
+            font-weight: 500;
             margin-bottom: 30px;
-            font-weight: 400;
+            background: #eef2ff;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
-        /* --- RIGHT COLUMN --- */
+        /* --- RIGHT COLUMN (CONTENT) --- */
         .right-col {
-            padding: 40px 30px;
+            padding: 40px 40px;
             z-index: 1;
+            background: rgba(255,255,255,0.95); /* Sedikit transparan agar bg blend */
         }
 
+        /* Contact Info Modern */
         .contact-info {
             display: flex;
-            justify-content: flex-end;
-            gap: 20px;
-            font-size: 12px;
-            margin-bottom: 40px;
             flex-wrap: wrap;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+            font-size: 13px;
         }
         
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: #333;
+            gap: 8px;
+            color: var(--text-light);
+            background: #f8f9fa;
+            padding: 5px 12px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
+            color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .contact-item i {
-            color: #3498db;
-        }
+        .contact-item i { color: #005bea; }
 
-        /* --- COLLAPSIBLE SECTIONS (INTERACTIVE) --- */
+        /* --- INTERACTIVE ACCORDION (ANIMATED) --- */
         details {
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        details:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
         }
 
         summary {
-            background-color: #3498db; /* Warna Biru Header */
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
-            text-transform: uppercase;
+            background: white;
+            color: var(--text-dark);
+            padding: 15px 20px;
+            font-weight: 600;
             cursor: pointer;
-            list-style: none; /* Hilangkan panah default */
+            list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 5px;
-            transition: background 0.3s;
+            position: relative;
+            z-index: 10;
         }
-
-        summary:hover {
-            background-color: #2980b9;
-        }
-
-        /* Tambahkan icon plus/minus custom */
+        
+        /* Custom Icon untuk Summary */
         summary::after {
-            content: '+'; 
-            font-size: 18px;
-            font-weight: bold;
+            content: '\f078'; /* FontAwesome Chevron Down */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            color: #005bea;
         }
 
         details[open] summary::after {
-            content: '-';
+            transform: rotate(180deg);
         }
 
         details[open] summary {
-            border-radius: 5px 5px 0 0;
+            background: #f8faff;
+            color: #005bea;
+            border-bottom: 1px solid #eee;
         }
 
+        /* Konten yang muncul saat diklik */
         .content-box {
-            padding: 15px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 5px 5px;
-            animation: fadeIn 0.5s ease;
+            padding: 20px;
+            background: white;
+            animation: fadeInDown 0.4s ease-out;
         }
 
-        /* --- SKILL BARS --- */
-        .skill-item {
-            margin-bottom: 10px;
-        }
-        .skill-name {
-            font-size: 14px;
-            font-weight: bold;
+        /* --- SKILLS --- */
+        .skill-item { margin-bottom: 15px; }
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
             margin-bottom: 5px;
-            display: block;
-            text-align: left;
         }
         .bar-bg {
-            background: #ddd;
-            height: 10px;
-            border-radius: 5px;
-            position: relative;
+            background: #eee;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
         }
         .bar-fill {
             height: 100%;
-            background: #3498db;
-            border-radius: 5px;
-            position: relative;
-        }
-        /* Lingkaran slider effect */
-        .bar-fill::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: -3px;
-            width: 16px;
-            height: 16px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 50%;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            width: 0; /* Mulai dari 0 untuk animasi */
+            /* Animasi berjalan saat details dibuka - trik CSS sederhana */
+            animation: fillBar 1s ease-out forwards 0.2s; 
         }
 
-        /* --- LANGUAGE DOTS --- */
+        /* --- LANGUAGES --- */
         .lang-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
         }
-        .dots {
-            display: flex;
-            gap: 5px;
-        }
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: #ddd;
+        .dots .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #e0e0e0;
             border-radius: 50%;
+            margin-left: 3px;
+            transition: background 0.3s;
         }
-        .dot.active {
-            background-color: #3498db;
+        .dots .dot.active {
+            background: #00c6fb;
+            box-shadow: 0 0 5px #00c6fb;
         }
 
-        /* --- TIMELINE (Education & Work) --- */
+        /* --- TIMELINE --- */
         .timeline-item {
-            border-left: 2px solid #ccc;
-            padding-left: 20px;
-            margin-bottom: 20px;
+            border-left: 3px solid #e0e0e0;
+            padding-left: 25px;
+            margin-bottom: 25px;
             position: relative;
         }
+        .timeline-item:last-child { margin-bottom: 0; }
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -6px;
-            top: 0;
-            width: 10px;
-            height: 10px;
-            background: #3498db;
+            left: -8px; /* Center on line */
+            top: 5px;
+            width: 13px;
+            height: 13px;
+            background: white;
+            border: 3px solid #005bea;
             border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .timeline-item:hover::before {
+            background: #005bea;
         }
         .timeline-title {
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--text-dark);
             font-size: 16px;
         }
         .timeline-date {
-            color: #3498db;
+            color: #005bea;
             font-size: 12px;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin: 4px 0 8px 0;
+            display: inline-block;
+            background: #eef2ff;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
         .timeline-desc {
             font-size: 13px;
-            color: #555;
-            line-height: 1.4;
+            color: var(--text-light);
+            line-height: 1.6;
         }
 
         /* --- INTERESTS --- */
         .interest-grid {
             display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
         }
         .interest-item {
             text-align: center;
+            transition: transform 0.3s;
         }
+        .interest-item:hover { transform: translateY(-5px); }
         .interest-icon {
-            background: #3498db;
+            background: var(--primary-gradient);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 5px;
+            margin: 0 auto 8px;
+            box-shadow: 0 5px 15px rgba(0, 91, 234, 0.3);
+            font-size: 18px;
         }
-        .interest-text {
-            font-size: 12px;
-            font-weight: bold;
-        }
+        .interest-text { font-size: 12px; font-weight: 600; color: var(--text-dark); }
 
-        @keyframes fadeIn {
+        /* --- KEYFRAME ANIMATIONS --- */
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+        @keyframes pulseProfile {
+            0% { box-shadow: 0 0 0 0 rgba(0, 91, 234, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 91, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 91, 234, 0); }
+        }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .resume-container {
-                grid-template-columns: 1fr;
-            }
-            .bg-curve-top { height: 150px; }
+        /* --- RESPONSIVE --- */
+        @media (max-width: 850px) {
+            .resume-container { grid-template-columns: 1fr; max-width: 500px; }
+            .left-col { border-right: none; border-bottom: 1px solid #eee; }
+            .bg-deco { clip-path: ellipse(150% 60% at 50% 20%); height: 200px; }
+            .contact-info { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-curve-top"></div>
-    <div class="bg-curve-bottom"></div>
-
     <div class="resume-container">
         
+        <div class="bg-deco"></div>
+        <div class="bg-deco-bottom"></div>
+
         <div class="left-col">
             <div class="profile-img-container">
-                <img src="foto-profile.png" alt="Profile Picture">
+                <img src="foto-profil.png" alt="Profile Picture">
             </div>
 
             <div class="name-title">
-                <h1>Yermiah<br>Serge</h1>
+                <h1>Salman Fariziy</h1>
                 <h3>Web Developer</h3>
             </div>
 
             <details>
-                <summary><i class="fas fa-cog"></i> &nbsp; SKILLS</summary>
+                <summary><span style="display:flex; align-items:center; gap:10px;"><i class="fas fa-tools" style="color:#005bea;"></i> SKILLS</span></summary>
                 <div class="content-box">
                     <div class="skill-item">
-                        <span class="skill-name">PHP</span>
+                        <div class="skill-header"><span>PHP</span><span>80%</span></div>
                         <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
                     </div>
                     <div class="skill-item">
-                        <span class="skill-name">HTML</span>
-                        <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
+                        <div class="skill-header"><span>HTML</span><span>95%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
                     </div>
                     <div class="skill-item">
-                        <span class="skill-name">Swift</span>
+                        <div class="skill-header"><span>Swift</span><span>60%</span></div>
                         <div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div>
                     </div>
                     <div class="skill-item">
-                        <span class="skill-name">Objective C</span>
+                        <div class="skill-header"><span>Objective C</span><span>75%</span></div>
                         <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
                     </div>
                 </div>
             </details>
 
             <details>
-                <summary><i class="fas fa-comment"></i> &nbsp; LANGUAGE</summary>
+                <summary><span style="display:flex; align-items:center; gap:10px;"><i class="fas fa-language" style="color:#005bea;"></i> LANGUAGE</span></summary>
                 <div class="content-box">
                     <div class="lang-item">
                         <span>English</span>
-                        <div class="dots">
-                            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
-                        </div>
+                        <div class="dots"><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span></div>
                     </div>
                     <div class="lang-item">
                         <span>Spanish</span>
-                        <div class="dots">
-                            <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot"></span>
-                        </div>
+                        <div class="dots"><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot"></span></div>
                     </div>
                     <div class="lang-item">
                         <span>German</span>
-                        <div class="dots">
-                            <span class="dot active"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                        </div>
+                        <div class="dots"><span class="dot active"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="lang-item">
+                        <span>Chinese</span>
+                        <div class="dots"><span class="dot active"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                 </div>
             </details>
 
-            <div style="margin-top: 30px;">
-                <h4 style="color:#222; margin-bottom:15px; text-transform:uppercase;"><i class="fas fa-heart" style="color:#3498db"></i> Interest</h4>
+            <div style="margin-top: 30px; position:relative;">
+                <h4 style="color:var(--text-dark); margin-bottom:15px; letter-spacing:1px; font-weight:700;">INTERESTS</h4>
                 <div class="interest-grid">
                     <div class="interest-item">
                         <div class="interest-icon"><i class="fas fa-mobile-alt"></i></div>
                         <span class="interest-text">Gadget</span>
                     </div>
                     <div class="interest-item">
-                        <div class="interest-icon"><i class="fas fa-plane"></i></div>
+                        <div class="interest-icon"><i class="fas fa-plane-departure"></i></div>
                         <span class="interest-text">Travel</span>
                     </div>
                     <div class="interest-item">
-                        <div class="interest-icon"><i class="fas fa-camera"></i></div>
+                        <div class="interest-icon"><i class="fas fa-camera-retro"></i></div>
                         <span class="interest-text">Photo</span>
                     </div>
                 </div>
-             </div>
+            </div>
 
         </div>
 
         <div class="right-col">
             
             <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i> name@company.com
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i> +09-8209-283-038
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i> Street Avenue 90
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-globe"></i> www.helpshared.com
-                </div>
+                <div class="contact-item"><i class="fas fa-envelope"></i> salman.fariziy6@sma.belajar.id</div>
+                <div class="contact-item"><i class="fas fa-phone-alt"></i> +62-8595-3293-78951</div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i> USA(UwongSugioAsli)</div>
+                <div class="contact-item"><i class="fas fa-globe"></i> www.helpshared.com</div>
             </div>
 
-            <div style="background:#3498db; color:white; padding:10px 15px; font-weight:bold; border-radius:5px; margin-bottom:15px; display:flex; justify-content:space-between;">
-                <span>PROFILE</span> <i class="fas fa-user"></i>
+            <div style="margin-bottom: 30px;">
+                <div style="background:var(--primary-gradient); color:white; padding:10px 20px; border-radius:30px 0 30px 0; display:inline-block; font-weight:bold; margin-bottom:15px; box-shadow: 0 5px 15px rgba(0, 91, 234, 0.3);">
+                    PROFILE <i class="fas fa-user" style="margin-left:8px;"></i>
+                </div>
+                <p style="color:var(--text-light); line-height:1.7; text-align:justify;">
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam quis nostrud exerci tation dol.
+                </p>
             </div>
-            <p style="margin-bottom: 30px; color:#555; line-height:1.5;">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam quis nostrud exerci tation dol.
-            </p>
 
             <details>
-                <summary>EDUCATION <i class="fas fa-graduation-cap"></i></summary>
+                <summary>
+                    <span style="display:flex; align-items:center; gap:10px; font-size:18px;">EDUCATION</span>
+                    <i class="fas fa-graduation-cap" style="color:#00c6fb; opacity:0.5; font-size:24px;"></i>
+                </summary>
                 <div class="content-box">
                     <div class="timeline-item">
                         <div class="timeline-title">Local Programmer College</div>
@@ -424,7 +476,10 @@
             </details>
 
             <details>
-                <summary>WORK EXPERIENCE <i class="fas fa-desktop"></i></summary>
+                <summary>
+                    <span style="display:flex; align-items:center; gap:10px; font-size:18px;">WORK EXPERIENCE</span>
+                    <i class="fas fa-briefcase" style="color:#00c6fb; opacity:0.5; font-size:24px;"></i>
+                </summary>
                 <div class="content-box">
                     <div class="timeline-item">
                         <div class="timeline-title">Web Developer (Company 01)</div>
@@ -433,7 +488,7 @@
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Senior Web Developer (Company 02)</div>
-                        <div class="timeline-date">2012 - 2016</div>
+                        <div class="timeline-date">2016 - Present</div>
                         <div class="timeline-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
                     </div>
                 </div>
