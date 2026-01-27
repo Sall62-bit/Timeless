@@ -3,376 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Salman Fariziy</title>
+    <title>Salman Fariziy - Premium Profile</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* --- CSS VARIABLES & RESET --- */
+        /* --- CONFIGURATION --- */
         :root {
-            --primary: #005bea;
-            --gradient: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
-            --dark: #2d3436;
-            --grey: #636e72;
-            --light: #f9fbfd;
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --accent: #3b82f6;
+            --bg-body: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --gradient-header: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --shadow-soft: 0 10px 40px -10px rgba(37, 99, 235, 0.2);
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --radius-xl: 24px;
+            --radius-md: 12px;
         }
 
+        /* --- RESET & BASE --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru saat tap di Android */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #f0f2f5;
+            background-color: var(--bg-body);
+            background-image: radial-gradient(circle at 10% 20%, rgb(239, 246, 255) 0%, rgb(255, 255, 255) 90%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            /* Padding dihapus untuk mobile agar full screen */
-            padding: 0; 
+            align-items: flex-start;
+            padding: 20px;
+            color: var(--text-main);
         }
 
-        /* --- CONTAINER UTAMA --- */
-        .resume-container {
+        /* --- MAIN CONTAINER --- */
+        .cv-card {
             width: 100%;
-            max-width: 900px; /* Max width untuk desktop */
-            background-color: white;
-            display: grid;
-            grid-template-columns: 300px 1fr; /* Default Desktop */
-            position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            max-width: 900px;
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
             overflow: hidden;
+            position: relative;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- DEKORASI ATAS --- */
-        .header-bg {
+        /* --- ARTISTIC HEADER --- */
+        .header-section {
+            height: 200px;
+            background: var(--gradient-header);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 0;
+        }
+
+        /* Dekorasi Gelombang Abstrak */
+        .header-wave {
             position: absolute;
-            top: 0;
+            bottom: -1px;
             left: 0;
             width: 100%;
-            height: 220px;
-            background: var(--gradient);
-            z-index: 0;
-            /* Lengkungan yang lebih natural untuk mobile */
-            clip-path: ellipse(150% 70% at 50% 20%); 
+            height: auto;
+            fill: var(--card-bg);
         }
 
-        /* --- LEFT COLUMN (PROFILE) --- */
-        .left-col {
-            position: relative;
-            z-index: 2;
-            padding: 40px 20px;
+        /* --- PROFILE IDENTITY --- */
+        .profile-section {
             text-align: center;
-            background: transparent; /* Transparan agar kena background biru */
+            padding: 0 20px 30px 20px;
+            position: relative;
+            margin-top: -75px; /* Menarik konten ke atas menumpuk header */
         }
 
-        .profile-wrapper {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 40px; /* Turun sedikit agar ada efek floating */
-        }
-
-        .profile-img {
-            width: 140px;
-            height: 140px;
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
             border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 5px;
+            background: var(--card-bg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             object-fit: cover;
-            margin-top: -80px; /* Menarik foto ke atas keluar dari kartu */
-            margin-bottom: 15px;
-            background: #ddd;
+            border: 4px solid #f0f9ff;
         }
 
-        h1 {
-            font-size: 24px;
+        .name {
+            font-size: 28px;
             font-weight: 700;
-            color: var(--dark);
             margin-bottom: 5px;
+            background: linear-gradient(to right, #1e40af, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
         }
 
-        .job-title {
+        .role-badge {
             display: inline-block;
-            background: #e3f2fd;
+            background: #eff6ff;
             color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 6px 16px;
+            border-radius: 50px;
             font-size: 14px;
             font-weight: 500;
-            margin-bottom: 20px;
+            border: 1px solid #dbeafe;
         }
 
-        /* --- RIGHT COLUMN (CONTENT) --- */
-        .right-col {
-            padding: 40px 30px;
-            background: white;
-            z-index: 2;
+        /* --- LAYOUT GRID (Desktop) --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 35% 65%;
+            gap: 40px;
+            padding: 20px 40px 50px 40px;
         }
 
-        /* --- CONTACT INFO (Mobile Friendly) --- */
-        .contact-list {
+        /* --- CONTACT PILLS --- */
+        .contact-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
-        .contact-item {
-            flex: 1 1 45%; /* 2 item per baris */
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--grey);
+        .contact-pill {
             display: flex;
             align-items: center;
-            gap: 8px;
-            border: 1px solid #eee;
+            gap: 12px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: var(--text-sub);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
         }
-        
-        .contact-item i { color: var(--primary); }
 
-        /* --- ACCORDION / KLIK MENU --- */
-        details {
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            overflow: hidden;
+        .contact-pill:hover {
             background: white;
-            transition: all 0.3s;
+            border-color: #dbeafe;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            transform: translateX(5px);
+            color: var(--primary);
+        }
+
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* --- MODERN ACCORDION --- */
+        details {
+            margin-bottom: 16px;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         details[open] {
-            box-shadow: 0 5px 20px rgba(0,91,234,0.1);
-            border-color: #b3e5fc;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
         }
 
         summary {
-            padding: 15px 20px; /* Area tap luas */
-            font-weight: 600;
-            color: var(--dark);
-            cursor: pointer;
             list-style: none;
+            padding: 18px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-main);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff;
+            background: white;
+            transition: background 0.2s;
+        }
+        
+        summary i:first-child {
+            margin-right: 10px;
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
         }
 
-        summary:active {
-            background-color: #f0f0f0; /* Feedback visual saat dipencet */
+        summary:hover {
+            background: #f9fafb;
         }
 
-        summary i.icon-main {
-            width: 30px;
-            color: var(--primary);
-            font-size: 18px;
+        .arrow-icon {
+            transition: transform 0.3s ease;
+            color: #9ca3af;
         }
 
-        summary::after {
-            content: '\f107'; /* Panah bawah */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            transition: transform 0.3s;
-            color: #ccc;
-        }
-
-        details[open] summary::after {
+        details[open] .arrow-icon {
             transform: rotate(180deg);
             color: var(--primary);
         }
 
-        .content {
+        .details-content {
             padding: 20px;
-            background: #fcfcfc;
-            border-top: 1px solid #f0f0f0;
-            animation: slideDown 0.3s ease-out;
+            background: #f9fafb;
+            border-top: 1px solid #f3f4f6;
+            animation: fadeIn 0.4s ease;
         }
 
-        @keyframes slideDown {
+        /* --- TIMELINE COMPONENT --- */
+        .timeline-item {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 24px;
+            border-left: 2px solid #e5e7eb;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+        }
+
+        .t-role { font-weight: 600; font-size: 15px; color: var(--text-main); display: block;}
+        .t-date { font-size: 12px; color: var(--accent); margin: 4px 0 8px; display: inline-block; font-weight: 500;}
+        .t-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+
+        /* --- SKILL BARS --- */
+        .skill-group { margin-bottom: 15px; }
+        .skill-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: 500; }
+        .skill-track { height: 8px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .skill-fill { 
+            height: 100%; 
+            border-radius: 10px; 
+            background: var(--gradient-header);
+            width: 0;
+            animation: fillProgress 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        /* --- INTERESTS GRID --- */
+        .interest-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .interest-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            padding: 15px 5px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .interest-card:hover { transform: translateY(-3px); border-color: #dbeafe; }
+        .interest-icon { font-size: 20px; color: var(--primary); margin-bottom: 5px; }
+        .interest-label { font-size: 11px; font-weight: 600; color: var(--text-sub); display: block;}
+
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* --- CONTENT STYLES --- */
-        /* Skill Bars */
-        .skill-row { margin-bottom: 12px; }
-        .skill-info { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; font-weight: 500;}
-        .progress-bg { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gradient); border-radius: 4px; }
-
-        /* Timeline */
-        .timeline { border-left: 2px solid #e0e0e0; padding-left: 20px; margin-left: 5px; }
-        .timeline-box { margin-bottom: 25px; position: relative; }
-        .timeline-box::before {
-            content: ''; position: absolute; left: -26px; top: 5px;
-            width: 10px; height: 10px; background: white; border: 3px solid var(--primary); border-radius: 50%;
+        @keyframes fillProgress {
+            from { width: 0; }
         }
-        .t-title { font-weight: 700; font-size: 15px; display: block; }
-        .t-date { font-size: 12px; color: var(--primary); background: #e3f2fd; padding: 2px 8px; border-radius: 4px; display: inline-block; margin: 5px 0; }
-        .t-desc { font-size: 13px; color: var(--grey); line-height: 1.5; }
 
-        /* Interest Icons */
-        .interest-wrap { display: flex; justify-content: space-around; gap: 10px; text-align: center; }
-        .int-icon {
-            width: 50px; height: 50px; background: var(--gradient); color: white;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 5px; font-size: 20px;
-            box-shadow: 0 5px 10px rgba(0,91,234,0.3);
-        }
-        .int-label { font-size: 12px; font-weight: 600; }
-
-        /* --- MEDIA QUERIES (JANTUNGNYA RESPONSIVE) --- */
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
-            .resume-container {
-                grid-template-columns: 1fr; /* Ubah jadi 1 Kolom */
-                border-radius: 0;
-                box-shadow: none;
+            body { padding: 0; background: #fff; }
+            .cv-card { border-radius: 0; box-shadow: none; }
+            .grid-layout { grid-template-columns: 1fr; padding: 20px 25px 40px 25px; gap: 30px; }
+            .header-section { height: 160px; }
+            .profile-section { margin-top: -60px; }
+            .avatar-container { width: 130px; height: 130px; }
+            .contact-group { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px; 
             }
-
-            .header-bg {
-                height: 180px;
-                border-radius: 0 0 30px 30px;
-                clip-path: none; /* Bentuk lebih sederhana di HP */
-            }
-
-            .left-col {
-                padding: 20px;
-                padding-bottom: 0;
-            }
-
-            .profile-wrapper {
-                margin-top: 60px;
-                text-align: center;
-            }
-
-            .right-col {
-                padding: 20px;
-            }
-
-            .contact-item {
-                flex: 1 1 100%; /* Kontak jadi 1 baris ke bawah agar teks tidak terpotong */
-                justify-content: center; /* Teks tengah */
-            }
-
-            /* Perbaiki padding accordion agar enak di jempol */
-            summary { padding: 18px 20px; } 
+            .contact-pill { padding: 10px; font-size: 11px; flex-direction: column; text-align: center; gap: 8px; }
+            .contact-pill:hover { transform: none; }
+            .name { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="resume-container">
+    <div class="cv-card">
         
-        <div class="header-bg"></div>
-
-        <div class="left-col">
-            <div class="profile-wrapper">
-                <img src="foto-profil.png" alt="Profile" class="profile-img">
-                <h1>SALMAN FARIZIY</h1>
-                <span class="job-title">Web Developer</span>
-                
-                <div style="margin-top: 20px;">
-                    <div class="interest-wrap">
-                        <div><div class="int-icon"><i class="fas fa-mobile-alt"></i></div><span class="int-label">Gadget</span></div>
-                        <div><div class="int-icon"><i class="fas fa-plane"></i></div><span class="int-label">Travel</span></div>
-                        <div><div class="int-icon"><i class="fas fa-camera"></i></div><span class="int-label">Photo</span></div>
-                    </div>
-                </div>
-            </div>
+        <div class="header-section">
+            <svg class="header-wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
         </div>
 
-        <div class="right-col">
-
-            <div class="contact-list">
-                <div class="contact-item"><i class="fas fa-envelope"></i> salman.fariziy6@sma.belajar.id</div>
-                <div class="contact-item"><i class="fas fa-phone"></i> +62-895-3293-78951</div>
-                <div class="contact-item"><i class="fas fa-map-marker-alt"></i> USA(Uwong Sugio Asli)</div>
-                <div class="contact-item"><i class="fas fa-globe"></i> www.helpshared.com</div>
-            </div>
-
-            <div style="margin-bottom: 25px;">
-                <h3 style="margin-bottom: 10px; color: var(--dark);">Profile</h3>
-                <p style="font-size: 13px; color: var(--grey); line-height: 1.6; text-align: justify;">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam quis nostrud exerci tation dol.
+        <div class="content-wrapper">
+            
+            <div class="profile-section">
+                <div class="avatar-container">
+                    <img src="foto-profil.png" alt="Salman Fariziy" class="avatar-img">
+                </div>
+                <h1 class="name">SALMAN FARIZIY</h1>
+                <span class="role-badge">Web Developer</span>
+                <p style="margin-top: 15px; color: var(--text-sub); font-size: 14px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Passionate developer creating intuitive and dynamic web experiences. Expert in translating designs into clean, semantic code.
                 </p>
             </div>
 
-            <details>
-                <summary><i class="fas fa-tools icon-main"></i> SKILLS</summary>
-                <div class="content">
-                    <div class="skill-row">
-                        <div class="skill-info"><span>PHP</span><span>80%</span></div>
-                        <div class="progress-bg"><div class="progress-fill" style="width: 80%"></div></div>
+            <div class="grid-layout">
+                
+                <div class="left-panel">
+                    
+                    <div class="contact-group">
+                        <a href="#" class="contact-pill">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <span>salman@company.com</span>
+                        </a>
+                        <a href="#" class="contact-pill">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <span>+62-895-3293-78951</span>
+                        </a>
+                        <a href="#" class="contact-pill">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <span>USA (Uwong Sugio Asli)</span>
+                        </a>
+                        <a href="#" class="contact-pill">
+                            <div class="contact-icon"><i class="fas fa-globe"></i></div>
+                            <span>helpshared.com</span>
+                        </a>
                     </div>
-                    <div class="skill-row">
-                        <div class="skill-info"><span>HTML</span><span>95%</span></div>
-                        <div class="progress-bg"><div class="progress-fill" style="width: 95%"></div></div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-info"><span>Swift</span><span>60%</span></div>
-                        <div class="progress-bg"><div class="progress-fill" style="width: 60%"></div></div>
-                    </div>
-                </div>
-            </details>
 
-            <details>
-                <summary><i class="fas fa-graduation-cap icon-main"></i> EDUCATION</summary>
-                <div class="content">
-                    <div class="timeline">
-                        <div class="timeline-box">
-                            <span class="t-title">Local Programmer College</span>
-                            <span class="t-date">2012 - 2016</span>
-                            <p class="t-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy.</p>
+                    <h4 style="margin-bottom: 15px; color: var(--text-main); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Interests</h4>
+                    <div class="interest-grid">
+                        <div class="interest-card">
+                            <i class="fas fa-gamepad interest-icon"></i>
+                            <span class="interest-label">Gaming</span>
                         </div>
-                        <div class="timeline-box" style="margin-bottom:0;">
-                            <span class="t-title">Intl. Coding University</span>
-                            <span class="t-date">2016 - 2020</span>
-                            <p class="t-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy.</p>
+                        <div class="interest-card">
+                            <i class="fas fa-plane interest-icon"></i>
+                            <span class="interest-label">Travel</span>
                         </div>
-                    </div>
-                </div>
-            </details>
-
-            <details>
-                <summary><i class="fas fa-briefcase icon-main"></i> EXPERIENCE</summary>
-                <div class="content">
-                    <div class="timeline">
-                        <div class="timeline-box">
-                            <span class="t-title">Web Developer (Company 01)</span>
-                            <span class="t-date">2012 - 2016</span>
-                            <p class="t-desc">Developing high quality web applications and backend systems.</p>
-                        </div>
-                        <div class="timeline-box" style="margin-bottom:0;">
-                            <span class="t-title">Senior Dev (Company 02)</span>
-                            <span class="t-date">2016 - Present</span>
-                            <p class="t-desc">Leading team of developers and managing project timelines.</p>
+                        <div class="interest-card">
+                            <i class="fas fa-camera interest-icon"></i>
+                            <span class="interest-label">Photo</span>
                         </div>
                     </div>
-                </div>
-            </details>
 
-            <details>
-                <summary><i class="fas fa-language icon-main"></i> LANGUAGE</summary>
-                <div class="content">
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:600; font-size:14px;">English</span>
-                            <span style="color:#f1c40f;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:600; font-size:14px;">Spanish</span>
-                            <span style="color:#f1c40f;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i style="color:#ddd;" class="fas fa-star"></i></span>
-                        </div>
-                    </div>
                 </div>
-            </details>
 
+                <div class="right-panel">
+                    
+                    <details>
+                        <summary>
+                            <div style="display:flex; align-items:center;">
+                                <i class="fas fa-code"></i> Professional Skills
+                            </div>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </summary>
+                        <div class="details-content">
+                            <div class="skill-group">
+                                <div class="skill-meta"><span>PHP & Laravel</span><span>90%</span></div>
+                                <div class="skill-track"><div class="skill-fill" style="width: 90%;"></div></div>
+                            </div>
+                            <div class="skill-group">
+                                <div class="skill-meta"><span>HTML5 & CSS3</span><span>95%</span></div>
+                                <div class="skill-track"><div class="skill-fill" style="width: 95%;"></div></div>
+                            </div>
+                            <div class="skill-group">
+                                <div class="skill-meta"><span>Swift / iOS</span><span>60%</span></div>
+                                <div class="skill-track"><div class="skill-fill" style="width: 60%;"></div></div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details open> <summary>
+                            <div style="display:flex; align-items:center;">
+                                <i class="fas fa-briefcase"></i> Work Experience
+                            </div>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </summary>
+                        <div class="details-content">
+                            <div class="timeline-item">
+                                <span class="t-role">Senior Web Developer</span>
+                                <span class="t-date">Company 02 | 2016 - Present</span>
+                                <p class="t-desc">Leading the frontend team, optimizing web performance by 40%, and mentoring junior developers.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="t-role">Web Developer</span>
+                                <span class="t-date">Company 01 | 2012 - 2016</span>
+                                <p class="t-desc">Developed responsive websites and maintained legacy codebases for high-traffic clients.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <div style="display:flex; align-items:center;">
+                                <i class="fas fa-graduation-cap"></i> Education History
+                            </div>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </summary>
+                        <div class="details-content">
+                            <div class="timeline-item">
+                                <span class="t-role">International Coding University</span>
+                                <span class="t-date">Bachelor Degree | 2012 - 2016</span>
+                                <p class="t-desc">Major in Computer Science. Graduated with Honors.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="t-role">Local Programmer College</span>
+                                <span class="t-date">Certification | 2010 - 2012</span>
+                                <p class="t-desc">Specialized training in Object Oriented Programming.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <div style="display:flex; align-items:center;">
+                                <i class="fas fa-language"></i> Languages
+                            </div>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </summary>
+                        <div class="details-content">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                                    <div style="font-weight:600; font-size:14px; margin-bottom:5px;">English</div>
+                                    <div style="color: gold; font-size:12px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                </div>
+                                <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                                    <div style="font-weight:600; font-size:14px; margin-bottom:5px;">Spanish</div>
+                                    <div style="color: gold; font-size:12px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i style="color:#ddd;" class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
         </div>
     </div>
 
