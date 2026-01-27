@@ -1,100 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Salman Fariziy - Premium Profile</title>
+    <title>Profil Salman Fariziy - Siswa & Developer</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CONFIGURATION --- */
+        /* --- KONFIGURASI TEMA --- */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --accent: #3b82f6;
-            --bg-body: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-sub: #6b7280;
-            --gradient-header: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
-            --shadow-soft: 0 10px 40px -10px rgba(37, 99, 235, 0.2);
-            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --radius-xl: 24px;
-            --radius-md: 12px;
+            --primary: #0ea5e9; /* Sky Blue */
+            --secondary: #6366f1; /* Indigo */
+            --bg-dark: #0f172a; /* Midnight Blue */
+            --card-glass: rgba(30, 41, 59, 0.7); /* Efek Kaca Gelap */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
         }
 
-        /* --- RESET & BASE --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Outfit', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-body);
-            background-image: radial-gradient(circle at 10% 20%, rgb(239, 246, 255) 0%, rgb(255, 255, 255) 90%);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: flex-start; /* Ubah ke flex-start agar scrollable di HP */
             padding: 20px;
-            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* --- MAIN CONTAINER --- */
+        /* --- PARTIKEL BACKGROUND (CSS ONLY) --- */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(14, 165, 233, 0.3);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        /* Mengatur posisi & durasi acak partikel */
+        .p1 { width: 80px; height: 80px; left: 10%; bottom: -100px; animation-duration: 15s; }
+        .p2 { width: 40px; height: 40px; left: 30%; bottom: -100px; animation-duration: 10s; animation-delay: 2s; background: rgba(99, 102, 241, 0.3); }
+        .p3 { width: 100px; height: 100px; left: 70%; bottom: -100px; animation-duration: 20s; animation-delay: 1s; }
+        .p4 { width: 20px; height: 20px; left: 50%; bottom: -100px; animation-duration: 12s; animation-delay: 5s; }
+        .p5 { width: 60px; height: 60px; left: 90%; bottom: -100px; animation-duration: 18s; animation-delay: 0s; background: rgba(99, 102, 241, 0.3); }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- CONTAINER UTAMA (GLASSMORPHISM) --- */
         .cv-card {
             width: 100%;
             max-width: 900px;
-            background: var(--card-bg);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-soft);
+            background: var(--card-glass);
+            backdrop-filter: blur(12px); /* Efek Blur di belakang */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             position: relative;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            margin-bottom: 40px;
         }
 
-        /* --- ARTISTIC HEADER --- */
+        /* --- HEADER --- */
         .header-section {
-            height: 200px;
-            background: var(--gradient-header);
+            height: 180px;
+            background: var(--accent-gradient);
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 0;
         }
 
-        /* Dekorasi Gelombang Abstrak */
         .header-wave {
             position: absolute;
             bottom: -1px;
             left: 0;
             width: 100%;
-            height: auto;
-            fill: var(--card-bg);
+            fill: rgba(30, 41, 59, 1); /* Samakan dengan warna card body tapi solid */
+        }
+        
+        /* Hack agar warna wave menyatu dengan backdrop blur card */
+        .wave-fix {
+            fill: #1e293b; /* Warna solid fallback */
         }
 
-        /* --- PROFILE IDENTITY --- */
+        /* --- PROFIL --- */
         .profile-section {
             text-align: center;
-            padding: 0 20px 30px 20px;
+            padding: 0 20px;
+            margin-top: -80px;
             position: relative;
-            margin-top: -75px; /* Menarik konten ke atas menumpuk header */
         }
 
         .avatar-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             margin: 0 auto 15px;
             border-radius: 50%;
-            padding: 5px;
-            background: var(--card-bg);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            padding: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary)); /* Border Gradient */
+            position: relative;
         }
 
         .avatar-img {
@@ -102,39 +130,50 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #f0f9ff;
+            border: 4px solid #0f172a; /* Border dalam agar kontras */
+            background-color: #1e293b;
         }
 
         .name {
             font-size: 28px;
             font-weight: 700;
+            color: white;
             margin-bottom: 5px;
-            background: linear-gradient(to right, #1e40af, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             text-transform: uppercase;
         }
 
         .role-badge {
             display: inline-block;
-            background: #eff6ff;
-            color: var(--primary);
+            background: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
             padding: 6px 16px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 500;
-            border: 1px solid #dbeafe;
+            border: 1px solid rgba(14, 165, 233, 0.3);
         }
 
-        /* --- LAYOUT GRID (Desktop) --- */
+        .profile-desc {
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- LAYOUT GRID --- */
         .grid-layout {
             display: grid;
             grid-template-columns: 35% 65%;
             gap: 40px;
-            padding: 20px 40px 50px 40px;
+            padding: 40px;
         }
 
-        /* --- CONTACT PILLS --- */
+        /* --- CONTACT BUTTONS (PILLS) --- */
         .contact-group {
             display: flex;
             flex-direction: column;
@@ -147,28 +186,27 @@
             align-items: center;
             gap: 12px;
             padding: 12px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             font-size: 13px;
-            color: var(--text-sub);
-            transition: all 0.3s ease;
+            color: var(--text-muted);
             text-decoration: none;
-            border: 1px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
         .contact-pill:hover {
-            background: white;
-            border-color: #dbeafe;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            background: rgba(14, 165, 233, 0.15);
+            border-color: var(--primary);
+            color: white;
             transform: translateX(5px);
-            color: var(--primary);
         }
 
         .contact-icon {
             width: 32px;
             height: 32px;
-            background: #eff6ff;
-            color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -176,19 +214,20 @@
             font-size: 14px;
         }
 
-        /* --- MODERN ACCORDION --- */
+        /* --- ACCORDION MODERN --- */
         details {
             margin-bottom: 16px;
-            background: white;
-            border-radius: var(--radius-md);
-            border: 1px solid #e5e7eb;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         details[open] {
+            background: rgba(255, 255, 255, 0.06);
             border-color: var(--primary);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.1);
         }
 
         summary {
@@ -200,24 +239,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: white;
-            transition: background 0.2s;
         }
         
         summary i:first-child {
-            margin-right: 10px;
-            color: var(--accent);
+            margin-right: 12px;
+            color: var(--primary);
             width: 20px;
             text-align: center;
         }
 
-        summary:hover {
-            background: #f9fafb;
-        }
-
         .arrow-icon {
             transition: transform 0.3s ease;
-            color: #9ca3af;
+            color: var(--text-muted);
         }
 
         details[open] .arrow-icon {
@@ -227,250 +260,242 @@
 
         .details-content {
             padding: 20px;
-            background: #f9fafb;
-            border-top: 1px solid #f3f4f6;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             animation: fadeIn 0.4s ease;
         }
 
-        /* --- TIMELINE COMPONENT --- */
+        /* --- CONTENT ITEMS --- */
+        /* Timeline */
         .timeline-item {
             position: relative;
             padding-left: 24px;
             margin-bottom: 24px;
-            border-left: 2px solid #e5e7eb;
         }
-        .timeline-item:last-child { margin-bottom: 0; }
-        
+        .timeline-item::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 2px; background: rgba(255,255,255,0.1);
+        }
         .timeline-dot {
-            position: absolute;
-            left: -6px;
-            top: 4px;
-            width: 10px;
-            height: 10px;
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
+            position: absolute; left: -4px; top: 6px;
+            width: 10px; height: 10px; background: var(--primary);
+            border-radius: 50%; box-shadow: 0 0 10px var(--primary);
         }
+        .t-role { font-weight: 600; font-size: 15px; color: white; display: block;}
+        .t-date { font-size: 12px; color: var(--primary); margin: 4px 0 8px; display: inline-block;}
+        .t-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
-        .t-role { font-weight: 600; font-size: 15px; color: var(--text-main); display: block;}
-        .t-date { font-size: 12px; color: var(--accent); margin: 4px 0 8px; display: inline-block; font-weight: 500;}
-        .t-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
-
-        /* --- SKILL BARS --- */
+        /* Skills */
         .skill-group { margin-bottom: 15px; }
-        .skill-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: 500; }
-        .skill-track { height: 8px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .skill-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #e2e8f0; }
+        .skill-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
         .skill-fill { 
-            height: 100%; 
-            border-radius: 10px; 
-            background: var(--gradient-header);
-            width: 0;
-            animation: fillProgress 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-            animation-delay: 0.2s;
+            height: 100%; border-radius: 10px; background: var(--accent-gradient);
+            position: relative; overflow: hidden;
+        }
+        /* Efek kilau pada skill bar */
+        .skill-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
         }
 
-        /* --- INTERESTS GRID --- */
-        .interest-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+        /* Interest Cards */
+        .interest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .interest-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            padding: 15px 5px;
-            border-radius: 12px;
-            text-align: center;
-            transition: transform 0.2s;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 5px; border-radius: 12px; text-align: center;
+            transition: 0.3s;
         }
-        .interest-card:hover { transform: translateY(-3px); border-color: #dbeafe; }
-        .interest-icon { font-size: 20px; color: var(--primary); margin-bottom: 5px; }
-        .interest-label { font-size: 11px; font-weight: 600; color: var(--text-sub); display: block;}
+        .interest-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+        .interest-icon { font-size: 20px; color: var(--secondary); margin-bottom: 5px; }
+        .interest-label { font-size: 11px; font-weight: 500; color: var(--text-muted); display: block;}
 
-        /* --- ANIMATIONS --- */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fillProgress {
-            from { width: 0; }
-        }
-
-        /* --- MOBILE RESPONSIVE --- */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
-            body { padding: 0; background: #fff; }
-            .cv-card { border-radius: 0; box-shadow: none; }
-            .grid-layout { grid-template-columns: 1fr; padding: 20px 25px 40px 25px; gap: 30px; }
+            .cv-card { border-radius: 0; margin-bottom: 0; border: none; background: rgba(15, 23, 42, 0.95); }
+            .grid-layout { grid-template-columns: 1fr; padding: 25px; gap: 30px; }
             .header-section { height: 160px; }
             .profile-section { margin-top: -60px; }
-            .avatar-container { width: 130px; height: 130px; }
-            .contact-group { 
-                display: grid; 
-                grid-template-columns: 1fr 1fr; 
-                gap: 10px; 
-            }
-            .contact-pill { padding: 10px; font-size: 11px; flex-direction: column; text-align: center; gap: 8px; }
-            .contact-pill:hover { transform: none; }
+            .avatar-container { width: 140px; height: 140px; }
             .name { font-size: 24px; }
+            
+            /* Kontak Grid di HP */
+            .contact-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .contact-pill { flex-direction: column; text-align: center; padding: 15px 10px; gap: 8px; }
+            .contact-icon { margin-bottom: 5px; }
+            
+            /* Interest Horizontal Scroll di HP jika sempit */
+            .interest-grid { gap: 8px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="particles">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+    </div>
+
     <div class="cv-card">
         
         <div class="header-section">
             <svg class="header-wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path fill="#ffffff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                <path class="wave-fix" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
             </svg>
         </div>
 
-        <div class="content-wrapper">
+        <div class="profile-section">
+            <div class="avatar-container">
+                <img src="foto-profil.png" alt="Salman Fariziy" class="avatar-img">
+            </div>
+            <h1 class="name">SALMAN FARIZIY</h1>
+            <span class="role-badge">Siswa SMA & Web Developer</span>
             
-            <div class="profile-section">
-                <div class="avatar-container">
-                    <img src="foto-profil.png" alt="Salman Fariziy" class="avatar-img">
+            <p class="profile-desc">
+                Halo! Saya siswa kelas 11 (2 SMA) yang memiliki ketertarikan besar pada dunia teknologi dan pemrograman. 
+                Saat ini sedang aktif belajar membuat website modern dan aplikasi mobile yang interaktif. 
+                Cita-cita saya adalah menjadi Full-Stack Developer profesional di masa depan.
+            </p>
+        </div>
+
+        <div class="grid-layout">
+            
+            <div class="left-panel">
+                
+                <div class="contact-group">
+                    
+                    <a href="mailto:salman.fariziy6@sma.belajar.id" class="contact-pill">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <span style="font-size: 11px; word-break: break-all;">salman.fariziy6@sma.belajar.id</span>
+                    </a>
+
+                    <a href="https://wa.me/+62895329378951" class="contact-pill" target="_blank">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <span>+62-895-3293-78951</span>
+                    </a>
+
+                    <div class="contact-pill">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <span>USA (Uwong Sugio Asli)</span>
+                    </div>
                 </div>
-                <h1 class="name">SALMAN FARIZIY</h1>
-                <span class="role-badge">Web Developer</span>
-                <p style="margin-top: 15px; color: var(--text-sub); font-size: 14px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Passionate developer creating intuitive and dynamic web experiences. Expert in translating designs into clean, semantic code.
-                </p>
+
+                <h4 style="margin-bottom: 15px; color: var(--text-main); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Minat</h4>
+                <div class="interest-grid">
+                    <div class="interest-card">
+                        <i class="fas fa-code interest-icon"></i>
+                        <span class="interest-label">Coding</span>
+                    </div>
+                    <div class="interest-card">
+                        <i class="fas fa-gamepad interest-icon"></i>
+                        <span class="interest-label">Game</span>
+                    </div>
+                    <div class="interest-card">
+                        <i class="fas fa-robot interest-icon"></i>
+                        <span class="interest-label">AI</span>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="grid-layout">
+            <div class="right-panel">
                 
-                <div class="left-panel">
-                    
-                    <div class="contact-group">
-                        <a href="#" class="contact-pill">
-                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                            <span>salman@company.com</span>
-                        </a>
-                        <a href="#" class="contact-pill">
-                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                            <span>+62-895-3293-78951</span>
-                        </a>
-                        <a href="#" class="contact-pill">
-                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-                            <span>USA (Uwong Sugio Asli)</span>
-                        </a>
-                        <a href="#" class="contact-pill">
-                            <div class="contact-icon"><i class="fas fa-globe"></i></div>
-                            <span>helpshared.com</span>
-                        </a>
-                    </div>
-
-                    <h4 style="margin-bottom: 15px; color: var(--text-main); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Interests</h4>
-                    <div class="interest-grid">
-                        <div class="interest-card">
-                            <i class="fas fa-gamepad interest-icon"></i>
-                            <span class="interest-label">Gaming</span>
+                <details open>
+                    <summary>
+                        <div><i class="fas fa-laptop-code"></i> Keahlian</div>
+                        <i class="fas fa-chevron-down arrow-icon"></i>
+                    </summary>
+                    <div class="details-content">
+                        <div class="skill-group">
+                            <div class="skill-meta"><span>HTML & CSS (Dasar Kuat)</span><span>90%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="width: 90%;"></div></div>
                         </div>
-                        <div class="interest-card">
-                            <i class="fas fa-plane interest-icon"></i>
-                            <span class="interest-label">Travel</span>
+                        <div class="skill-group">
+                            <div class="skill-meta"><span>Bahasa Indonesia</span><span>100%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="width: 100%;"></div></div>
                         </div>
-                        <div class="interest-card">
-                            <i class="fas fa-camera interest-icon"></i>
-                            <span class="interest-label">Photo</span>
+                         <div class="skill-group">
+                            <div class="skill-meta"><span>Bahasa Inggris (Pasif)</span><span>75%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <div class="skill-meta"><span>PHP & MySQL (Pemula)</span><span>60%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="width: 60%;"></div></div>
                         </div>
                     </div>
+                </details>
 
-                </div>
-
-                <div class="right-panel">
-                    
-                    <details>
-                        <summary>
-                            <div style="display:flex; align-items:center;">
-                                <i class="fas fa-code"></i> Professional Skills
-                            </div>
-                            <i class="fas fa-chevron-down arrow-icon"></i>
-                        </summary>
-                        <div class="details-content">
-                            <div class="skill-group">
-                                <div class="skill-meta"><span>PHP & Laravel</span><span>90%</span></div>
-                                <div class="skill-track"><div class="skill-fill" style="width: 90%;"></div></div>
-                            </div>
-                            <div class="skill-group">
-                                <div class="skill-meta"><span>HTML5 & CSS3</span><span>95%</span></div>
-                                <div class="skill-track"><div class="skill-fill" style="width: 95%;"></div></div>
-                            </div>
-                            <div class="skill-group">
-                                <div class="skill-meta"><span>Swift / iOS</span><span>60%</span></div>
-                                <div class="skill-track"><div class="skill-fill" style="width: 60%;"></div></div>
-                            </div>
+                <details>
+                    <summary>
+                        <div><i class="fas fa-users"></i> Organisasi & Proyek</div>
+                        <i class="fas fa-chevron-down arrow-icon"></i>
+                    </summary>
+                    <div class="details-content">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="t-role">Anggota Klub Komputer</span>
+                            <span class="t-date">SMA - 2023 s/d Sekarang</span>
+                            <p class="t-desc">Aktif belajar bersama teman-teman mengenai dasar jaringan dan pembuatan web sederhana untuk mading sekolah.</p>
                         </div>
-                    </details>
-
-                    <details open> <summary>
-                            <div style="display:flex; align-items:center;">
-                                <i class="fas fa-briefcase"></i> Work Experience
-                            </div>
-                            <i class="fas fa-chevron-down arrow-icon"></i>
-                        </summary>
-                        <div class="details-content">
-                            <div class="timeline-item">
-                                <span class="t-role">Senior Web Developer</span>
-                                <span class="t-date">Company 02 | 2016 - Present</span>
-                                <p class="t-desc">Leading the frontend team, optimizing web performance by 40%, and mentoring junior developers.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="t-role">Web Developer</span>
-                                <span class="t-date">Company 01 | 2012 - 2016</span>
-                                <p class="t-desc">Developed responsive websites and maintained legacy codebases for high-traffic clients.</p>
-                            </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="t-role">Proyek Tugas Akhir Semester</span>
+                            <span class="t-date">Sekolah - 2023</span>
+                            <p class="t-desc">Berhasil membuat website biodata diri menggunakan HTML dan CSS murni dengan nilai memuaskan.</p>
                         </div>
-                    </details>
+                    </div>
+                </details>
 
-                    <details>
-                        <summary>
-                            <div style="display:flex; align-items:center;">
-                                <i class="fas fa-graduation-cap"></i> Education History
-                            </div>
-                            <i class="fas fa-chevron-down arrow-icon"></i>
-                        </summary>
-                        <div class="details-content">
-                            <div class="timeline-item">
-                                <span class="t-role">International Coding University</span>
-                                <span class="t-date">Bachelor Degree | 2012 - 2016</span>
-                                <p class="t-desc">Major in Computer Science. Graduated with Honors.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="t-role">Local Programmer College</span>
-                                <span class="t-date">Certification | 2010 - 2012</span>
-                                <p class="t-desc">Specialized training in Object Oriented Programming.</p>
-                            </div>
+                <details> 
+                    <summary>
+                        <div><i class="fas fa-graduation-cap"></i> Riwayat Pendidikan</div>
+                        <i class="fas fa-chevron-down arrow-icon"></i>
+                    </summary>
+                    <div class="details-content">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="t-role">SMA [Nama Sekolah Kamu]</span>
+                            <span class="t-date">Jurusan IPA/IPS | 2022 - Sekarang</span>
+                            <p class="t-desc">Saat ini duduk di Kelas 11 (2 SMA). Aktif mengikuti kegiatan ekstrakurikuler teknologi.</p>
                         </div>
-                    </details>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="t-role">SMP [Nama Sekolah Dulu]</span>
+                            <span class="t-date">Lulusan Tahun 2022</span>
+                            <p class="t-desc">Menyelesaikan pendidikan menengah pertama dengan baik.</p>
+                        </div>
+                    </div>
+                </details>
 
-                    <details>
-                        <summary>
-                            <div style="display:flex; align-items:center;">
-                                <i class="fas fa-language"></i> Languages
-                            </div>
-                            <i class="fas fa-chevron-down arrow-icon"></i>
-                        </summary>
-                        <div class="details-content">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
-                                    <div style="font-weight:600; font-size:14px; margin-bottom:5px;">English</div>
-                                    <div style="color: gold; font-size:12px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <details>
+                    <summary>
+                        <div><i class="fas fa-language"></i> Bahasa</div>
+                        <i class="fas fa-chevron-down arrow-icon"></i>
+                    </summary>
+                    <div class="details-content">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+                                <div style="font-weight:600; font-size:14px; margin-bottom:5px; color:white;">Indonesia</div>
+                                <div style="color: #facc15; font-size:12px;">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                                 </div>
-                                <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
-                                    <div style="font-weight:600; font-size:14px; margin-bottom:5px;">Spanish</div>
-                                    <div style="color: gold; font-size:12px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i style="color:#ddd;" class="fas fa-star"></i></div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+                                <div style="font-weight:600; font-size:14px; margin-bottom:5px; color:white;">Inggris</div>
+                                <div style="color: #facc15; font-size:12px;">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i style="color:#555;" class="fas fa-star"></i>
                                 </div>
                             </div>
                         </div>
-                    </details>
+                    </div>
+                </details>
 
-                </div>
             </div>
         </div>
     </div>
