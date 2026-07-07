@@ -2,503 +2,58 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Profil Salman Fariziy - Siswa & Developer</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto Kita Blur</title>
 
-    <style>
-        /* --- KONFIGURASI TEMA --- */
-        :root {
-            --primary: #0ea5e9; /* Sky Blue */
-            --secondary: #6366f1; /* Indigo */
-            --bg-dark: #0f172a; /* Midnight Blue */
-            --card-glass: rgba(30, 41, 59, 0.7); /* Efek Kaca Gelap */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-        }
+    <link rel="stylesheet" href="style.css">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Outfit', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Ubah ke flex-start agar scrollable di HP */
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* --- PARTIKEL BACKGROUND (CSS ONLY) --- */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(14, 165, 233, 0.3);
-            border-radius: 50%;
-            animation: floatUp linear infinite;
-        }
-
-        /* Mengatur posisi & durasi acak partikel */
-        .p1 { width: 80px; height: 80px; left: 10%; bottom: -100px; animation-duration: 15s; }
-        .p2 { width: 40px; height: 40px; left: 30%; bottom: -100px; animation-duration: 10s; animation-delay: 2s; background: rgba(99, 102, 241, 0.3); }
-        .p3 { width: 100px; height: 100px; left: 70%; bottom: -100px; animation-duration: 20s; animation-delay: 1s; }
-        .p4 { width: 20px; height: 20px; left: 50%; bottom: -100px; animation-duration: 12s; animation-delay: 5s; }
-        .p5 { width: 60px; height: 60px; left: 90%; bottom: -100px; animation-duration: 18s; animation-delay: 0s; background: rgba(99, 102, 241, 0.3); }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- CONTAINER UTAMA (GLASSMORPHISM) --- */
-        .cv-card {
-            width: 100%;
-            max-width: 900px;
-            background: var(--card-glass);
-            backdrop-filter: blur(12px); /* Efek Blur di belakang */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        /* --- HEADER --- */
-        .header-section {
-            height: 180px;
-            background: var(--accent-gradient);
-            position: relative;
-        }
-
-        .header-wave {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            fill: rgba(30, 41, 59, 1); /* Samakan dengan warna card body tapi solid */
-        }
-        
-        /* Hack agar warna wave menyatu dengan backdrop blur card */
-        .wave-fix {
-            fill: #1e293b; /* Warna solid fallback */
-        }
-
-        /* --- PROFIL --- */
-        .profile-section {
-            text-align: center;
-            padding: 0 20px;
-            margin-top: -80px;
-            position: relative;
-        }
-
-        .avatar-container {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary)); /* Border Gradient */
-            position: relative;
-        }
-
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #0f172a; /* Border dalam agar kontras */
-            background-color: #1e293b;
-        }
-
-        .name {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            text-transform: uppercase;
-        }
-
-        .role-badge {
-            display: inline-block;
-            background: rgba(14, 165, 233, 0.2);
-            color: #38bdf8;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid rgba(14, 165, 233, 0.3);
-        }
-
-        .profile-desc {
-            margin-top: 15px;
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.6;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- LAYOUT GRID --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 35% 65%;
-            gap: 40px;
-            padding: 40px;
-        }
-
-        /* --- CONTACT BUTTONS (PILLS) --- */
-        .contact-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .contact-pill {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            font-size: 13px;
-            color: var(--text-muted);
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .contact-pill:hover {
-            background: rgba(14, 165, 233, 0.15);
-            border-color: var(--primary);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .contact-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        /* --- ACCORDION MODERN --- */
-        details {
-            margin-bottom: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        details[open] {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.1);
-        }
-
-        summary {
-            list-style: none;
-            padding: 18px 20px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        summary i:first-child {
-            margin-right: 12px;
-            color: var(--primary);
-            width: 20px;
-            text-align: center;
-        }
-
-        .arrow-icon {
-            transition: transform 0.3s ease;
-            color: var(--text-muted);
-        }
-
-        details[open] .arrow-icon {
-            transform: rotate(180deg);
-            color: var(--primary);
-        }
-
-        .details-content {
-            padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeIn 0.4s ease;
-        }
-
-        /* --- CONTENT ITEMS --- */
-        /* Timeline */
-        .timeline-item {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 24px;
-        }
-        .timeline-item::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-            width: 2px; background: rgba(255,255,255,0.1);
-        }
-        .timeline-dot {
-            position: absolute; left: -4px; top: 6px;
-            width: 10px; height: 10px; background: var(--primary);
-            border-radius: 50%; box-shadow: 0 0 10px var(--primary);
-        }
-        .t-role { font-weight: 600; font-size: 15px; color: white; display: block;}
-        .t-date { font-size: 12px; color: var(--primary); margin: 4px 0 8px; display: inline-block;}
-        .t-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
-        /* Skills */
-        .skill-group { margin-bottom: 15px; }
-        .skill-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #e2e8f0; }
-        .skill-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .skill-fill { 
-            height: 100%; border-radius: 10px; background: var(--accent-gradient);
-            position: relative; overflow: hidden;
-        }
-        /* Efek kilau pada skill bar */
-        .skill-fill::after {
-            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: translateX(-100%);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
-
-        /* Interest Cards */
-        .interest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .interest-card {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px 5px; border-radius: 12px; text-align: center;
-            transition: 0.3s;
-        }
-        .interest-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
-        .interest-icon { font-size: 20px; color: var(--secondary); margin-bottom: 5px; }
-        .interest-label { font-size: 11px; font-weight: 500; color: var(--text-muted); display: block;}
-
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 768px) {
-            .cv-card { border-radius: 0; margin-bottom: 0; border: none; background: rgba(15, 23, 42, 0.95); }
-            .grid-layout { grid-template-columns: 1fr; padding: 25px; gap: 30px; }
-            .header-section { height: 160px; }
-            .profile-section { margin-top: -60px; }
-            .avatar-container { width: 140px; height: 140px; }
-            .name { font-size: 24px; }
-            
-            /* Kontak Grid di HP */
-            .contact-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-            .contact-pill { flex-direction: column; text-align: center; padding: 15px 10px; gap: 8px; }
-            .contact-icon { margin-bottom: 5px; }
-            
-            /* Interest Horizontal Scroll di HP jika sempit */
-            .interest-grid { gap: 8px; }
-        }
-    </style>
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.12"></script>
 </head>
+
 <body>
 
-    <div class="particles">
-        <div class="particle p1"></div>
-        <div class="particle p2"></div>
-        <div class="particle p3"></div>
-        <div class="particle p4"></div>
-        <div class="particle p5"></div>
+    <!-- Background -->
+    <div class="background"></div>
+
+    <!-- Camera -->
+    <video id="webcam" autoplay playsinline></video>
+
+    <!-- Canvas -->
+    <canvas id="output_canvas"></canvas>
+
+    <!-- Overlay -->
+    <div class="overlay">
+
+        <h1>Foto Kita Blur</h1>
+
+        <p id="status">
+            Arahkan tangan ✌️ ke kamera
+        </p>
+
     </div>
 
-    <div class="cv-card">
-        
-        <div class="header-section">
-            <svg class="header-wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path class="wave-fix" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
-        </div>
+    <!-- Foto -->
+    <div id="photoContainer">
 
-        <div class="profile-section">
-            <div class="avatar-container">
-                <img src="IMG_20260127_130659.jpg" alt="Salman Fariziy" class="avatar-img">
-            </div>
-            <h1 class="name">SALMAN FARIZIY</h1>
-            <span class="role-badge">Siswa SMA & Web Developer</span>
-            
-            <p class="profile-desc">
-                Halo! Saya siswa kelas 11 (2 SMA) yang memiliki ketertarikan besar pada dunia teknologi dan pemrograman. 
-                Saat ini sedang aktif belajar membuat website modern dan aplikasi mobile yang interaktif. 
-                Cita-cita saya adalah menjadi Full-Stack Developer profesional di masa depan.
-            </p>
-        </div>
+        <img
+            id="photo"
+            src="assets/foto.jpg"
+            alt="Foto Kita">
 
-        <div class="grid-layout">
-            
-            <div class="left-panel">
-                
-                <div class="contact-group">
-                    
-                    <a href="mailto:salman.fariziy6@sma.belajar.id" class="contact-pill">
-                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                        <span style="font-size: 11px; word-break: break-all;">salman.fariziy6@sma.belajar.id</span>
-                    </a>
-
-                    <a href="https://wa.me/+62895329378951" class="contact-pill" target="_blank">
-                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-                        <span>+62-895-3293-78951</span>
-                    </a>
-
-                    <div class="contact-pill">
-                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <span>USA (Uwong Sugio Asli)</span>
-                    </div>
-                </div>
-
-                <h4 style="margin-bottom: 15px; color: var(--text-main); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Minat</h4>
-                <div class="interest-grid">
-                    <div class="interest-card">
-                        <i class="fas fa-code interest-icon"></i>
-                        <span class="interest-label">Coding</span>
-                    </div>
-                    <div class="interest-card">
-                        <i class="fas fa-gamepad interest-icon"></i>
-                        <span class="interest-label">Game</span>
-                    </div>
-                    <div class="interest-card">
-                        <i class="fas fa-robot interest-icon"></i>
-                        <span class="interest-label">AI</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="right-panel">
-                
-                <details open>
-                    <summary>
-                        <div><i class="fas fa-laptop-code"></i> Keahlian</div>
-                        <i class="fas fa-chevron-down arrow-icon"></i>
-                    </summary>
-                    <div class="details-content">
-                        <div class="skill-group">
-                            <div class="skill-meta"><span>HTML & CSS (Dasar Kuat)</span><span>80%</span></div>
-                            <div class="skill-track"><div class="skill-fill" style="width: 80%;"></div></div>
-                        </div>
-                        <div class="skill-group">
-                            <div class="skill-meta"><span>C++ (Basic)</span><span>60%</span></div>
-                            <div class="skill-track"><div class="skill-fill" style="width: 60%;"></div></div>
-                        </div>
-                         <div class="skill-group">
-                            <div class="skill-meta"><span>Bahasa Inggris (Pasif)</span><span>75%</span></div>
-                            <div class="skill-track"><div class="skill-fill" style="width: 75%;"></div></div>
-                        </div>
-                        <div class="skill-group">
-                            <div class="skill-meta"><span>PHP & MySQL (Pemula)</span><span>60%</span></div>
-                            <div class="skill-track"><div class="skill-fill" style="width: 60%;"></div></div>
-                        </div>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>
-                        <div><i class="fas fa-users"></i> Organisasi & Proyek</div>
-                        <i class="fas fa-chevron-down arrow-icon"></i>
-                    </summary>
-                    <div class="details-content">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <span class="t-role">Anggota Klub Komputer</span>
-                            <span class="t-date">SMA - 2023 s/d Sekarang</span>
-                            <p class="t-desc">Aktif belajar bersama teman-teman mengenai dasar jaringan dan pembuatan web sederhana untuk mading sekolah.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <span class="t-role">Proyek Tugas Akhir Semester</span>
-                            <span class="t-date">Sekolah - 2023</span>
-                            <p class="t-desc">Berhasil membuat website biodata diri menggunakan HTML dan CSS murni dengan nilai memuaskan.</p>
-                        </div>
-                    </div>
-                </details>
-
-                <details> 
-                    <summary>
-                        <div><i class="fas fa-graduation-cap"></i> Riwayat Pendidikan</div>
-                        <i class="fas fa-chevron-down arrow-icon"></i>
-                    </summary>
-                    <div class="details-content">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <span class="t-role">SMA Negeri 1 Kedungpring</span>
-                            <span class="t-date">XI-C1 | 2022 - Sekarang</span>
-                            <p class="t-desc">Saat ini duduk di Kelas 11 (2 SMA). Aktif mengikuti kegiatan ekstrakurikuler teknologi.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <span class="t-role">SMP Negeri 1 Sugio</span>
-                            <span class="t-date">Lulusan Tahun 2022</span>
-                            <p class="t-desc">Menyelesaikan pendidikan menengah pertama dengan baik.</p>
-                        </div>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>
-                        <div><i class="fas fa-language"></i> Bahasa</div>
-                        <i class="fas fa-chevron-down arrow-icon"></i>
-                    </summary>
-                    <div class="details-content">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-                                <div style="font-weight:600; font-size:14px; margin-bottom:5px; color:white;">Indonesia</div>
-                                <div style="color: #facc15; font-size:12px;">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-                                <div style="font-weight:600; font-size:14px; margin-bottom:5px; color:white;">Inggris</div>
-                                <div style="color: #facc15; font-size:12px;">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i style="color:#555;" class="fas fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </details>
-
-            </div>
-        </div>
     </div>
+
+    <!-- Flash -->
+    <div id="flash"></div>
+
+    <!-- Blur -->
+    <div id="blurLayer"></div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
 
 </body>
 </html>
