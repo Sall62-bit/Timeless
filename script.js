@@ -1,70 +1,140 @@
-const $ = (sel, root=document) => root.querySelector(sel);
-const payload = { id: editingId || crypto.randomUUID(), date, desc, cat, amount, note };
-upsert(payload);
-form.reset(); $('#date').value = todayISO(); delete form.dataset.editingId;
-$('.btn-primary', form).textContent = '+ Tambah';
-});
+const video = document.getElementById("webcam");
+const canvas = document.getElementById("output_canvas");
+const ctx = canvas.getContext("2d");
 
+const photoContainer = document.getElementById("photoContainer");
+const flash = document.getElementById("flash");
+const blurLayer = document.getElementById("blurLayer");
+const statusText = document.getElementById("status");
 
-$('#table').addEventListener('click', (e)=>{
-const btn = e.target.closest('button'); if(!btn) return;
-const id = btn.dataset.edit || btn.dataset.del;
-const it = items.find(x=>x.id===id);
-if(btn.dataset.edit){
-$('#date').value = it.date; $('#desc').value = it.desc; $('#cat').value = it.cat; $('#amount').value = it.amount; $('#note').value = it.note||'';
-form.dataset.editingId = it.id; $('.btn-primary', form).textContent = 'Simpan Perubahan';
-window.scrollTo({top:0, behavior:'smooth'});
-} else if(btn.dataset.del){
-if(confirm('Hapus transaksi ini?')) removeById(id);
-}
-});
+let activated = false;
 
+// =============================
+// AKTIFKAN KAMERA
+// =============================
 
-$('#q').addEventListener('input', applyFilters);
-$('#month').addEventListener('change', applyFilters);
+async function startCamera() {
 
+    try{
 
-$('#exportCsv').addEventListener('click', ()=>{
-const {m,q} = currentFilters();
-const filtered = items.filter(x=> x.date.startsWith(m) && (q==='' || (x.desc+" "+x.cat+" "+(x.note||'')).toLowerCase().includes(q)) );
-const rows = [['id','date','desc','cat','amount','note'], ...filtered.map(x=>[x.id,x.date,x.desc,x.cat,x.amount,x.note?.replaceAll('
-',' ')||''])];
-const csv = rows.map(r=> r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('
-');
-download(csv, `pengeluaran_${m}.csv`, 'text/csv');
-});
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video:{
+                facingMode:"user"
+            },
+            audio:false
+        });
 
+        video.srcObject = stream;
 
-$('#exportJson').addEventListener('click', ()=>{
-download(JSON.stringify(items,null,2), `pengeluaran_backup.json`, 'application/json');
-});
+    }catch(e){
 
+        alert("Tidak dapat mengakses kamera.");
 
-$('#importJsonInput').addEventListener('change', async (e)=>{
-const file = e.target.files[0]; if(!file) return;
-try{
-const text = await file.text();
-const data = JSON.parse(text);
-if(!Array.isArray(data)) throw new Error('Format tidak valid');
-for(const x of data){ if(!x.id||!x.date||!x.desc||typeof x.amount!=="number") throw new Error('Data kurang lengkap') }
-items = data; save(items); refreshMonthOptions(); applyFilters(); alert('Import sukses ✅');
-}catch(err){ alert('Gagal import: '+ err.message) }
-e.target.value = '';
-});
+        console.log(e);
 
+    }
 
-$('#resetAll').addEventListener('click', ()=>{
-if(confirm('Hapus semua data? (tidak bisa di-undo)')){ items = []; save(items); refreshMonthOptions(); applyFilters(); }
-});
-
-
-$('#backupHint').addEventListener('click', ()=> alert('Saran: lakukan Export JSON tiap minggu/bulan agar aman kalau ganti HP/PC.'))
-
-
-function download(content, filename, type){
-const blob = new Blob([content], {type}); const url = URL.createObjectURL(blob);
-const a = document.createElement('a'); a.href=url; a.download=filename; a.click(); URL.revokeObjectURL(url);
 }
 
+startCamera();
 
-refreshMonthOptions(); applyFilters();
+// =============================
+// RESIZE CANVAS
+// =============================
+
+video.addEventListener("loadeddata",()=>{
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    draw();
+
+});
+
+// =============================
+// TAMPILKAN VIDEO
+// =============================
+
+function draw(){
+
+    ctx.save();
+
+    ctx.scale(-1,1);
+
+    ctx.drawImage(
+        video,
+        -canvas.width,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.restore();
+
+    requestAnimationFrame(draw);
+
+}
+
+// =============================
+// ANIMASI FOTO
+// =============================
+
+function showPhoto(){
+
+    if(activated) return;
+
+    activated = true;
+
+    statusText.innerHTML = "Foto berhasil ditampilkan ❤️";
+
+    blurLayer.classList.add("active");
+
+    flash.classList.add("active");
+
+    photoContainer.classList.add("show");
+
+    setTimeout(()=>{
+
+        flash.classList.remove("active");
+
+    },500);
+
+}
+
+// =============================
+// RESET
+// =============================
+
+function resetPhoto(){
+
+    activated = false;
+
+    statusText.innerHTML = "Arahkan tangan ✌️ ke kamera";
+
+    blurLayer.classList.remove("active");
+
+    photoContainer.classList.remove("show");
+
+}
+
+// =============================
+// DEMO
+// Space = tampil
+// R = reset
+// =============================
+
+window.addEventListener("keydown",(e)=>{
+
+    if(e.code==="Space"){
+
+        showPhoto();
+
+    }
+
+    if(e.key==="r" || e.key==="R"){
+
+        resetPhoto();
+
+    }
+
+});
