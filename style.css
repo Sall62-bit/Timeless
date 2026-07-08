@@ -2,155 +2,129 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    overflow:hidden;
-    background:#000;
     width:100vw;
     height:100vh;
+    overflow:hidden;
+    background:#000;
 }
 
-.background{
+/* ===========================
+   Kamera
+=========================== */
+
+#webcam{
     position:fixed;
     inset:0;
-    background:linear-gradient(180deg,#0d1117,#000);
-    z-index:-3;
-}
 
-/* =======================
-   CAMERA
-======================= */
-
-#webcam,
-#output_canvas{
-    position:absolute;
     width:100%;
     height:100%;
+
     object-fit:cover;
+
     transform:scaleX(-1);
+
+    z-index:1;
 }
 
-#output_canvas{
-    z-index:2;
-    pointer-events:none;
-}
+/* ===========================
+   Canvas
+=========================== */
 
-/* =======================
-   TEXT
-======================= */
+#canvas{
 
-.overlay{
-    position:absolute;
-    top:35px;
+    position:fixed;
+    inset:0;
+
     width:100%;
-    text-align:center;
-    color:white;
-    z-index:20;
-    user-select:none;
-}
-
-.overlay h1{
-    font-size:34px;
-    font-weight:700;
-    margin-bottom:10px;
-    text-shadow:0 0 15px rgba(255,255,255,.4);
-}
-
-.overlay p{
-    font-size:17px;
-    opacity:.8;
-}
-
-/* =======================
-   PHOTO
-======================= */
-
-#photoContainer{
-    position:absolute;
-    inset:0;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    opacity:0;
-    transform:scale(.7);
-
-    transition:.8s;
-
-    z-index:10;
-
-    pointer-events:none;
-}
-
-#photoContainer.show{
-    opacity:1;
-    transform:scale(1);
-}
-
-#photo{
-
-    width:min(88vw,380px);
-
-    border-radius:22px;
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.6),
-    0 0 40px rgba(255,255,255,.18);
-
-    border:3px solid rgba(255,255,255,.2);
-
-    animation:float 3s ease-in-out infinite;
-}
-
-/* =======================
-   FLASH
-======================= */
-
-#flash{
-    position:absolute;
-    inset:0;
-    background:white;
-
-    opacity:0;
+    height:100%;
 
     pointer-events:none;
 
-    z-index:30;
+    z-index:2;
 }
 
-#flash.active{
-    animation:flash .45s ease;
-}
-
-/* =======================
-   BLUR
-======================= */
+/* ===========================
+   Blur
+=========================== */
 
 #blurLayer{
 
-    position:absolute;
+    position:fixed;
     inset:0;
 
     backdrop-filter:blur(0px);
+    -webkit-backdrop-filter:blur(0px);
 
-    transition:.8s;
-
-    z-index:5;
+    transition:all .4s ease;
 
     pointer-events:none;
+
+    z-index:3;
 }
 
 #blurLayer.active{
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
 }
 
-/* =======================
-   ANIMATION
-======================= */
+/* ===========================
+   Status
+=========================== */
+
+#statusBox{
+
+    position:fixed;
+
+    top:20px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:15px 25px;
+
+    background:rgba(0,0,0,.45);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:15px;
+
+    color:#fff;
+
+    text-align:center;
+
+    backdrop-filter:blur(10px);
+
+    z-index:10;
+}
+
+#statusBox h2{
+
+    font-size:22px;
+
+    margin-bottom:8px;
+}
+
+#status{
+
+    font-size:16px;
+
+    color:#ddd;
+}
+
+/* ===========================
+   Animasi
+=========================== */
+
+.flash{
+
+    animation:flash .4s;
+}
 
 @keyframes flash{
 
@@ -158,44 +132,40 @@ body{
         opacity:1;
     }
 
-    100%{
-        opacity:0;
-    }
-
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0);
-    }
-
     50%{
-        transform:translateY(-12px);
+        opacity:.4;
     }
 
     100%{
-        transform:translateY(0);
+        opacity:1;
     }
 
 }
 
-/* =======================
-   MOBILE
-======================= */
+/* ===========================
+   Mobile
+=========================== */
 
-@media(max-width:600px){
+@media(max-width:768px){
 
-.overlay h1{
-    font-size:28px;
+#statusBox{
+
+    width:90%;
+
+    padding:12px;
+
 }
 
-.overlay p{
-    font-size:15px;
+#statusBox h2{
+
+    font-size:18px;
+
 }
 
-#photo{
-    width:90vw;
+#status{
+
+    font-size:14px;
+
 }
 
 }
