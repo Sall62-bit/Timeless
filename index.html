@@ -3,57 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foto Kita Blur</title>
+    <title>Open Palm Blur</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-    <!-- MediaPipe -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.12"></script>
 </head>
 
 <body>
 
-    <!-- Background -->
-    <div class="background"></div>
-
-    <!-- Camera -->
-    <video id="webcam" autoplay playsinline></video>
+    <!-- Kamera -->
+    <video
+        id="webcam"
+        autoplay
+        playsinline
+        muted>
+    </video>
 
     <!-- Canvas -->
-    <canvas id="output_canvas"></canvas>
+    <canvas id="canvas"></canvas>
 
-    <!-- Overlay -->
-    <div class="overlay">
-
-        <h1>Foto Kita Blur</h1>
-
-        <p id="status">
-            Arahkan tangan ✌️ ke kamera
-        </p>
-
-    </div>
-
-    <!-- Foto -->
-    <div id="photoContainer">
-
-        <img
-            id="photo"
-            src="assets/foto.jpg"
-            alt="Foto Kita">
-
-    </div>
-
-    <!-- Flash -->
-    <div id="flash"></div>
-
-    <!-- Blur -->
+    <!-- Blur Overlay -->
     <div id="blurLayer"></div>
 
+    <!-- Status -->
+    <div id="statusBox">
+        <h2>🖐 Open Palm Detector</h2>
+        <p id="status">
+            Menunggu gesture...
+        </p>
+    </div>
+
     <!-- Script -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
 </body>
 </html>
